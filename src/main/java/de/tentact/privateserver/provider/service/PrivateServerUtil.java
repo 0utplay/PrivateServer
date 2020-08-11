@@ -53,12 +53,16 @@ public class PrivateServerUtil {
 
         JsonDocument document = new JsonDocument("serverowner", serverOwner).append("templatePrefix", templatePrefix).append("templateName", templateName);
 
-        ServiceConfiguration
+        ServiceInfoSnapshot serviceInfoSnapshot = ServiceConfiguration
                 .builder(serviceTask)
                 .addTemplates(serviceTemplate)
                 .properties(document)
                 .build()
-                .createNewService().provider().start();
+                .createNewService();
+        if(serviceInfoSnapshot == null) {
+            return false;
+        }
+        serviceInfoSnapshot.provider().startAsync();
         return true;
     }
 
