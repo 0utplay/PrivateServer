@@ -12,6 +12,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
@@ -77,10 +78,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.tentact.languageapi</groupId>
+            <groupId>com.github.0utplay.LanguageAPI</groupId>
             <artifactId>API</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>provided</scope>
+            <version>1.7-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>de.dytanic.cloudnet</groupId>
