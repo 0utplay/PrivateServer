@@ -34,7 +34,6 @@ public class CurrentPrivateServiceUtil {
         UUID serverOwner = this.getProperty("serverowner", UUID.class);
         ICloudPlayer cloudPlayer = this.iPlayerManager.getOnlinePlayer(serverOwner);
 
-
         if (cloudPlayer == null) {
             return;
         }

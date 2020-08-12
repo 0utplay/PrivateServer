@@ -45,7 +45,8 @@ public class I18N {
         Logger.getAnonymousLogger().log(Level.INFO, "Creating default messages");
         PREFIX.createDefaults("&ePServer x &7");
         NO_BASECOMMAND_PERMISSION.createDefaults("Dazu hast du keine Rechte");
-        COMMAND_HELP.createDefaults("Nutze /pserver create <Prefix/Name>");
+        COMMAND_HELP.createDefaults("Nutze /pserver create <Prefix/Name>\\n" +
+                "Nutze /pserver npc <create | delete>");
         WRONG_TEMPLATE_FORMAT.createDefaults("Templates sollten folgender Maßsen aussehen: Prefix/Name");
         NO_BASECOMMAND_ON_PSERVER.createDefaults("Du kannst diesen Command nicht auf einem privaten Server nutzen.");
         STARTING_PSERVER.createDefaults("Es wird ein privater Server mit dem Template %TEMPLATE_PREFIX% gestartet.", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");

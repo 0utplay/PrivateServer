@@ -13,11 +13,13 @@ public class PrivateServerConfig {
 
     private final String privateServerTaskName, baseCommandPermission;
     private final NPCInventory npcInventory;
+    private NPCSetting npcSetting;
     private final NPCInventoryCreateServerItems serverItems;
 
-    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, NPCInventory npcInventory, NPCInventoryCreateServerItems serverItems) {
+    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, NPCInventory npcInventory, NPCSetting npcSetting, NPCInventoryCreateServerItems serverItems) {
         this.privateServerTaskName = privateServerTaskName;
         this.baseCommandPermission = baseCommandPermission;
+        this.npcSetting = npcSetting;
         this.npcInventory = npcInventory;
         this.serverItems = serverItems;
     }
@@ -40,5 +42,13 @@ public class PrivateServerConfig {
 
     public String getBaseCommandPermission() {
         return this.baseCommandPermission;
+    }
+
+    public NPCSetting getNPCSettings() {
+        return this.npcSetting;
+    }
+
+    public void setNPCSettings(NPCSetting npcSetting) {
+        this.npcSetting = npcSetting;
     }
 }

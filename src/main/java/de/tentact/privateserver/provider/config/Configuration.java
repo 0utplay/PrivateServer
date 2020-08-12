@@ -20,8 +20,10 @@ public class Configuration {
 
     private Document document = new DefaultDocument();
 
+    private final File configFile = new File("plugins/PrivateServer", "config.json");
+
     public Configuration() {
-        File configFile = new File("plugins/PrivateServer", "config.json");
+
         if (configFile.exists()) {
             Logger.getAnonymousLogger().log(Level.INFO, "Config already exists");
             document = Documents.jsonStorage().read(configFile);
@@ -34,7 +36,14 @@ public class Configuration {
                 "pserver.basecommand",
                 new NPCInventory(
                         "Test",
+                        "pserveer.opennpc",
                         1
+                ),
+                new NPCSetting(
+                        true,
+                        true,
+                        null
+
                 ),
                 new NPCInventoryCreateServerItems(
                         "187",
@@ -60,4 +69,8 @@ public class Configuration {
         return document.get("config", PrivateServerConfig.class);
     }
 
+    public Configuration writeConfiguration(PrivateServerConfig privateServerConfig) {
+        new DefaultDocument("config", privateServerConfig).json().write(configFile);
+        return this;
+    }
 }

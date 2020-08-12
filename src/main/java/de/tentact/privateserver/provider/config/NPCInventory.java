@@ -9,10 +9,12 @@ package de.tentact.privateserver.provider.config;
 public class NPCInventory {
 
     private final String name;
+    private final String openPermission;
     private final int size;
 
-    public NPCInventory(String name, int size) {
+    public NPCInventory(String name, String openPermission, int size) {
         this.name = name;
+        this.openPermission = openPermission;
         this.size = size;
     }
 
@@ -22,5 +24,9 @@ public class NPCInventory {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getOpenPermission() {
+        return openPermission;
     }
 }
