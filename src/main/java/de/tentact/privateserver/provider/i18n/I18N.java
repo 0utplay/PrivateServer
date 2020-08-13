@@ -11,9 +11,6 @@ import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.i18n.Translation;
 import de.tentact.privateserver.PrivateServer;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class I18N {
 
     private static final LanguageAPI languageAPI = LanguageAPI.getInstance();
@@ -50,7 +47,7 @@ public class I18N {
         privateServer.logInfo("Creating default translations");
         PREFIX.createDefaults("&ePServer x &7");
         NO_BASECOMMAND_PERMISSION.createDefaults("Dazu hast du keine Rechte");
-        COMMAND_HELP.createDefaults("Nutze /pserver create <Prefix/Name>\\n" +
+        COMMAND_HELP.createDefaults("Nutze /pserver create <Prefix/Name>\n" +
                 "Nutze /pserver npc <create | delete>");
         WRONG_TEMPLATE_FORMAT.createDefaults("Templates sollten folgender Maßsen aussehen: Prefix/Name");
         NO_BASECOMMAND_ON_PSERVER.createDefaults("Du kannst diesen Command nicht auf einem privaten Server nutzen.");

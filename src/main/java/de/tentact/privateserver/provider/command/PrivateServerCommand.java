@@ -64,20 +64,20 @@ public class PrivateServerCommand implements CommandExecutor {
                     this.privateServerConfig.setNPCSettings(currentNPCSetting.setNPCLocation(null));
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                 } else if (args[1].equalsIgnoreCase("create")) {
-                    if (this.privateServer.getNPCPool().getNPCs().size() == 0) {
+                    if (args.length < 4) {
+                        languagePlayer.sendMessage(I18N.COMMAND_HELP);
+                        return false;
+                    }
+                    if (!this.isBoolean(args[2]) || !this.isBoolean(args[3])) {
+                        languagePlayer.sendMessage(I18N.COMMAND_HELP);
+                        return false;
+                    }
+                    if (this.privateServer.getNPCPool().getNPCs().size() != 0) {
                         this.privateServer.removeNPC();
                     }
-                    if(args.length < 4) {
-                        languagePlayer.sendMessage(I18N.COMMAND_HELP);
-                        return false;
-                    }
-                    if (!this.isBoolean(args[2])|| !this.isBoolean(args[3])) {
-                        languagePlayer.sendMessage(I18N.COMMAND_HELP);
-                        return false;
-                    }
-                    boolean imitadePlayer = Boolean.parseBoolean(args[2]);
+                    boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
-                    NPCSetting setting = new NPCSetting(imitadePlayer, lookAtPlayer, new NPCLocation(player.getLocation()));
+                    NPCSetting setting = new NPCSetting(imitatePlayer, lookAtPlayer, new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.spawnNPC();
