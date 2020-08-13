@@ -8,6 +8,7 @@ package de.tentact.privateserver.provider.config;
 
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceTask;
+import org.bukkit.ChatColor;
 
 public class PrivateServerConfig {
 
@@ -54,6 +55,6 @@ public class PrivateServerConfig {
     }
 
     public String getNPCName() {
-        return npcName;
+        return ChatColor.translateAlternateColorCodes('&', npcName);
     }
 }

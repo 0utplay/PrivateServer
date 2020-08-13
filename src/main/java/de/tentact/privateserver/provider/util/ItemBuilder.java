@@ -32,12 +32,11 @@ public class ItemBuilder {
         this(Material.getMaterial(materialName));
     }
 
-    public ItemBuilder setSubId(byte subId) {
+    public void setSubId(byte subId) {
         if (subId == -1) {
-            return this;
+            return;
         }
         this.itemStack.setDurability(subId);
-        return this;
     }
 
     public ItemBuilder(NPCServerItemProperty serverItemProperty) {

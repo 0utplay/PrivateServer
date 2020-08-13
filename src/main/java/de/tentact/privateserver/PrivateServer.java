@@ -13,6 +13,7 @@ import de.dytanic.cloudnet.wrapper.Wrapper;
 import de.tentact.privateserver.provider.command.PrivateServerCommand;
 import de.tentact.privateserver.provider.config.Configuration;
 import de.tentact.privateserver.provider.config.NPCSetting;
+import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
 import de.tentact.privateserver.provider.listener.PlayerNPCInteract;
 import de.tentact.privateserver.provider.service.PrivateServerUtil;
@@ -25,7 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PrivateServer extends JavaPlugin {
 
@@ -57,6 +57,7 @@ public class PrivateServer extends JavaPlugin {
         this.getLogger().log(Level.INFO, "Initialising PrivateServer Provider...");
         I18N.createDefaultMessages(this);
         this.configuration = new Configuration(this);
+        this.checkConfiguration();
         this.privateServerUtil = new PrivateServerUtil(this);
         npcPool = new NPCPool(this);
         this.spawnNPC();
@@ -88,7 +89,7 @@ public class PrivateServer extends JavaPlugin {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             Profile profile = new Profile(UUID.randomUUID(), this.configuration.getPrivateServerConfig().getNPCName(), null);
             npcId = new NPC.Builder(profile)
-                    .imitatePlayer(settings.isImitadePlayer())
+                    .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())
                     .location(settings.getNPCLocation().getLocation())
                     .build(npcPool).getEntityId();
@@ -101,6 +102,14 @@ public class PrivateServer extends JavaPlugin {
 
     public NPCPool getNPCPool() {
         return npcPool;
+    }
+
+    public void checkConfiguration() {
+        PrivateServerConfig serverConfig = this.configuration.getPrivateServerConfig();
+
+        if(serverConfig.getNPCInventory().getSize() < serverConfig.getServerItems().getStartItems().size()) {
+            throw new UnsupportedOperationException("Inventory size is smaller than the amount of startItems");
+        }
     }
 
     public void logInfo(String message) {

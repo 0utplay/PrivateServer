@@ -11,11 +11,9 @@ import com.github.derrop.documents.Document;
 import com.github.derrop.documents.Documents;
 import de.tentact.privateserver.PrivateServer;
 
-import java.io.*;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Configuration {
 
@@ -36,9 +34,9 @@ public class Configuration {
         document.append("config", new PrivateServerConfig(
                 "PServer",
                 "pserver.basecommand",
-                "PrivateServer",
+                "&4PrivateServer",
                 new NPCInventory(
-                        "Test",
+                        "&4PrivateServer",
                         "pserver.opennpc",
                         9
                 ),
@@ -46,17 +44,16 @@ public class Configuration {
                         true,
                         true,
                         null
-
                 ),
                 new NPCInventoryCreateServerItems(
                         Collections.singletonList(
                                 new NPCServerItemProperty(
-                                        "DisplayName",
-                                        "MaterialName",
+                                        "&5BedWars - Map",
+                                        "RED_BED",
                                         "TemplatePrefix/TemplateName",
                                         "start.permission.template",
                                         (byte) 0,
-                                        Arrays.asList("Lore1", "Lore2"),
+                                        Arrays.asList("Click to start server", "Lore2"),
                                         0,
                                         true,
                                         true

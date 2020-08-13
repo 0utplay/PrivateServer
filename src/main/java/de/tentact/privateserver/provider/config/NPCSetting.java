@@ -8,18 +8,18 @@ package de.tentact.privateserver.provider.config;
 
 public class NPCSetting {
 
-    private final boolean shouldImitadePlayer;
+    private final boolean shouldImitatePlayer;
     private final boolean shouldLookAtPlayer;
     private NPCLocation npcLocation;
 
-    public NPCSetting(boolean shouldImitadePlayer, boolean shouldLookAtPlayer, NPCLocation npcLocation) {
-        this.shouldImitadePlayer = shouldImitadePlayer;
+    public NPCSetting(boolean shouldImitatePlayer, boolean shouldLookAtPlayer, NPCLocation npcLocation) {
+        this.shouldImitatePlayer = shouldImitatePlayer;
         this.shouldLookAtPlayer = shouldLookAtPlayer;
         this.npcLocation = npcLocation;
     }
 
-    public boolean isImitadePlayer() {
-        return this.shouldImitadePlayer;
+    public boolean isImitatePlayer() {
+        return this.shouldImitatePlayer;
     }
 
     public boolean isLookAtPlayer() {

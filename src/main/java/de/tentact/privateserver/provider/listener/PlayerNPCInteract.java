@@ -16,7 +16,6 @@ import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
 import de.tentact.privateserver.provider.util.ItemBuilder;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,8 +25,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PlayerNPCInteract implements Listener {
@@ -99,7 +96,7 @@ public class PlayerNPCInteract implements Listener {
                                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
                             return;
                         }
-                        player.performCommand("pserver create " + template);
+                        this.privateServer.getPrivateServerUtil().createPrivateServer(player, template);
                     });
 
         }

@@ -6,6 +6,8 @@ package de.tentact.privateserver.provider.config;
     Uhrzeit: 22:25
 */
 
+import org.bukkit.ChatColor;
+
 import java.util.List;
 
 public class NPCServerItemProperty {
@@ -30,7 +32,7 @@ public class NPCServerItemProperty {
     }
 
     public String getDisplayName() {
-        return this.displayName;
+        return ChatColor.translateAlternateColorCodes('&', this.displayName);
     }
 
     public String getMaterialName() {

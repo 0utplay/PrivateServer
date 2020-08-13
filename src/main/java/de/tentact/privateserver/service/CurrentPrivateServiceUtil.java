@@ -48,10 +48,6 @@ public class CurrentPrivateServiceUtil {
         return this.getProperty("serverowner", UUID.class);
     }
 
-    public boolean isOwner(UUID playerId) {
-        return this.getProperty("serverowner", UUID.class).equals(this.getOwner());
-    }
-
     public <T> T getProperty(String name, Class<T> clazz) {
         return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getProperties().get(name, clazz);
     }
@@ -74,10 +70,4 @@ public class CurrentPrivateServiceUtil {
                 .findFirst()
                 .orElse(null);
     }
-
-
-    public String getCurrentServiceName() {
-        return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getName();
-    }
-
 }
