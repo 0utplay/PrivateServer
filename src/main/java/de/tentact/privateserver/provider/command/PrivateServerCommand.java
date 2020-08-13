@@ -6,6 +6,7 @@ package de.tentact.privateserver.provider.command;
     Uhrzeit: 13:59
 */
 
+import com.github.juliarn.npc.NPC;
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceInfoSnapshot;
 import de.dytanic.cloudnet.driver.service.ServiceTemplate;

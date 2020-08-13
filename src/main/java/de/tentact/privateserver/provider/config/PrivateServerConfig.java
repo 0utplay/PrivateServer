@@ -24,7 +24,7 @@ public class PrivateServerConfig {
         this.serverItems = serverItems;
     }
 
-    public NPCInventory getNpcInventory() {
+    public NPCInventory getNPCInventory() {
         return this.npcInventory;
     }
 

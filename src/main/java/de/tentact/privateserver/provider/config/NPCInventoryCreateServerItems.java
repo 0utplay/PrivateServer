@@ -10,22 +10,10 @@ import java.util.Collection;
 
 public class NPCInventoryCreateServerItems {
 
-    private final String name;
-    private final int size;
     private final Collection<NPCServerItemProperty> startItems;
 
-    public NPCInventoryCreateServerItems(String name, int size, Collection<NPCServerItemProperty> startItems) {
-        this.name = name;
-        this.size = size;
+    public NPCInventoryCreateServerItems(Collection<NPCServerItemProperty> startItems) {
         this.startItems = startItems;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public int getSize() {
-        return this.size;
     }
 
     public Collection<NPCServerItemProperty> getStartItems() {

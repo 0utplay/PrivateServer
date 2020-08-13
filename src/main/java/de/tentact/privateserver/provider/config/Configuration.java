@@ -36,7 +36,7 @@ public class Configuration {
                 "pserver.basecommand",
                 new NPCInventory(
                         "Test",
-                        "pserveer.opennpc",
+                        "pserver.opennpc",
                         1
                 ),
                 new NPCSetting(
@@ -46,8 +46,6 @@ public class Configuration {
 
                 ),
                 new NPCInventoryCreateServerItems(
-                        "187",
-                        1,
                         Collections.singletonList(
                                 new NPCServerItemProperty(
                                         "DisplayName",
@@ -69,8 +67,7 @@ public class Configuration {
         return document.get("config", PrivateServerConfig.class);
     }
 
-    public Configuration writeConfiguration(PrivateServerConfig privateServerConfig) {
+    public void writeConfiguration(PrivateServerConfig privateServerConfig) {
         new DefaultDocument("config", privateServerConfig).json().write(configFile);
-        return this;
     }
 }

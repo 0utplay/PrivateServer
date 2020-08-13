@@ -14,6 +14,7 @@ import de.tentact.privateserver.provider.command.PrivateServerCommand;
 import de.tentact.privateserver.provider.config.Configuration;
 import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.i18n.I18N;
+import de.tentact.privateserver.provider.listener.PlayerNPCInteract;
 import de.tentact.privateserver.provider.service.PrivateServerUtil;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
 import de.tentact.privateserver.service.listener.PlayerQuitListener;
@@ -58,6 +59,7 @@ public class PrivateServer extends JavaPlugin {
         this.configuration = new Configuration();
         this.privateServerUtil = new PrivateServerUtil(this);
         this.spawnNPC();
+        new PlayerNPCInteract(this);
     }
 
     void initPrivateServer() {
