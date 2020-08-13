@@ -73,7 +73,6 @@ public class PlayerNPCInteract implements Listener {
                 return;
             }
             event.setCancelled(true);
-            int clickedSlot = event.getSlot();
             Player player = (Player) event.getWhoClicked();
 
             this.getServerItemProperties(player)
@@ -103,7 +102,7 @@ public class PlayerNPCInteract implements Listener {
     }
 
     public List<NPCServerItemProperty> getServerItemProperties(Player player) {
-        return this.serverConfig.getServerItems().getStartItems()
+        return this.serverConfig.getStartItems()
                 .stream()
                 .filter(npcServerItemProperty ->
                         player.hasPermission(npcServerItemProperty.getStartPermission()) ||

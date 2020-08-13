@@ -20,10 +20,7 @@ import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
 import org.bukkit.entity.Player;
 
-import java.util.Collection;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PrivateServerUtil {
 
@@ -94,11 +91,9 @@ public class PrivateServerUtil {
             return;
         }
 
-
         String templatePrefix = template.split("/")[0];
         String templateName = template.split("/")[1];
-        NPCServerItemProperty serverItem = this.privateServerConfig.getServerItems()
-                .getStartItems()
+        NPCServerItemProperty serverItem = this.privateServerConfig.getStartItems()
                 .stream()
                 .filter(npcServerItemProperty -> npcServerItemProperty.getTemplateToStart().equalsIgnoreCase(template)).findFirst().orElse(null);
 

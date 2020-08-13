@@ -12,6 +12,7 @@ import com.github.juliarn.npc.profile.Profile;
 import de.dytanic.cloudnet.wrapper.Wrapper;
 import de.tentact.privateserver.provider.command.PrivateServerCommand;
 import de.tentact.privateserver.provider.config.Configuration;
+import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
@@ -20,6 +21,7 @@ import de.tentact.privateserver.provider.service.PrivateServerUtil;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
 import de.tentact.privateserver.service.listener.PlayerQuitListener;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -85,7 +87,7 @@ public class PrivateServer extends JavaPlugin {
     }
 
     public void spawnNPC() {
-        if(this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
+        if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             Profile profile = new Profile(UUID.randomUUID(), this.configuration.getPrivateServerConfig().getNPCName(), null);
             npcId = new NPC.Builder(profile)
@@ -107,16 +109,17 @@ public class PrivateServer extends JavaPlugin {
     public void checkConfiguration() {
         PrivateServerConfig serverConfig = this.configuration.getPrivateServerConfig();
 
-        if(serverConfig.getNPCInventory().getSize() < serverConfig.getServerItems().getStartItems().size()) {
+        if (serverConfig.getNPCInventory().getSize() < serverConfig.getStartItems().size()) {
             throw new UnsupportedOperationException("Inventory size is smaller than the amount of startItems");
+        }
+        for (NPCServerItemProperty itemProperty : serverConfig.getStartItems()) {
+            if (Material.getMaterial(itemProperty.getMaterialName()) == null) {
+                throw new UnsupportedOperationException("Material: " + itemProperty.getMaterialName() + " was not found. Please check your config.json");
+            }
         }
     }
 
     public void logInfo(String message) {
         this.getLogger().log(Level.INFO, message);
-    }
-
-    public void logWarning(String message) {
-        this.getLogger().log(Level.WARNING, message);
     }
 }

@@ -45,19 +45,17 @@ public class Configuration {
                         true,
                         null
                 ),
-                new NPCInventoryCreateServerItems(
-                        Collections.singletonList(
-                                new NPCServerItemProperty(
-                                        "&5BedWars - Map",
-                                        "RED_BED",
-                                        "TemplatePrefix/TemplateName",
-                                        "start.permission.template",
-                                        (byte) 0,
-                                        Arrays.asList("Click to start server", "Lore2"),
-                                        0,
-                                        true,
-                                        true
-                                )
+                Collections.singletonList(
+                        new NPCServerItemProperty(
+                                "&5BedWars - Map",
+                                "RED_BED",
+                                "TemplatePrefix/TemplateName",
+                                "start.permission.template",
+                                (byte) 0,
+                                Arrays.asList("Click to start server", "Lore2"),
+                                0,
+                                true,
+                                true
                         )
                 )
         )).json().write(configFile);

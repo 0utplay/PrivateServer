@@ -10,28 +10,30 @@ import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceTask;
 import org.bukkit.ChatColor;
 
+import java.util.Collection;
+
 public class PrivateServerConfig {
 
     private final String privateServerTaskName, baseCommandPermission, npcName;
     private final NPCInventory npcInventory;
     private NPCSetting npcSetting;
-    private final NPCInventoryCreateServerItems serverItems;
+    private final Collection<NPCServerItemProperty> startItems;
 
-    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, String npcName, NPCInventory npcInventory, NPCSetting npcSetting, NPCInventoryCreateServerItems serverItems) {
+    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, String npcName, NPCInventory npcInventory, NPCSetting npcSetting, Collection<NPCServerItemProperty> startItems) {
         this.privateServerTaskName = privateServerTaskName;
         this.baseCommandPermission = baseCommandPermission;
         this.npcName = npcName;
         this.npcSetting = npcSetting;
         this.npcInventory = npcInventory;
-        this.serverItems = serverItems;
+        this.startItems = startItems;
     }
 
     public NPCInventory getNPCInventory() {
         return this.npcInventory;
     }
 
-    public NPCInventoryCreateServerItems getServerItems() {
-        return this.serverItems;
+    public Collection<NPCServerItemProperty> getStartItems() {
+        return this.startItems;
     }
 
     public String getPrivateServerTaskName() {

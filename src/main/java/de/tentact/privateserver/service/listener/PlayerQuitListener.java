@@ -8,7 +8,6 @@ package de.tentact.privateserver.service.listener;
 
 import de.tentact.languageapi.LanguageAPI;
 import de.tentact.privateserver.PrivateServer;
-import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.i18n.I18N;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
 import org.bukkit.Bukkit;
@@ -31,25 +30,24 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void handlePlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        NPCServerItemProperty serverItemProperty = this.currentPrivateServiceUtil.getCurrentServerItemProperty();
         if (!this.privateServer.getCurrentPrivateServiceUtil().isPrivateServer()) {
             return;
         }
-        if (serverItemProperty == null) {
-            return;
-        }
-        if (!serverItemProperty.isAutoStopOnOwnerLeave()) {
-            return;
-        }
-        if (!player.getUniqueId().equals(this.currentPrivateServiceUtil.getOwner())) {
-            return;
-        }
-        languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.replace("%OWNER%", player.getName()));
+        this.currentPrivateServiceUtil.getCurrentServerItemProperty().ifPresent(serverItemProperty -> {
+            if (!serverItemProperty.isAutoStopOnOwnerLeave()) {
+                return;
+            }
+            if (!player.getUniqueId().equals(this.currentPrivateServiceUtil.getOwner())) {
+                return;
+            }
+            languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.replace("%OWNER%", player.getName()));
 
-        Bukkit.getScheduler().runTaskLater(privateServer, () -> {
-            languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.replace("%OWNER%", player.getName()));
-            Bukkit.shutdown();
-        }, 20 * 15L);
+            Bukkit.getScheduler().runTaskLater(privateServer, () -> {
+                languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.replace("%OWNER%", player.getName()));
+                Bukkit.shutdown();
+            }, 20 * 15L);
+        });
+
 
     }
 }

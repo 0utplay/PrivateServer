@@ -15,6 +15,7 @@ import de.tentact.privateserver.PrivateServer;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class CurrentPrivateServiceUtil {
@@ -52,13 +53,12 @@ public class CurrentPrivateServiceUtil {
         return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getProperties().get(name, clazz);
     }
 
-    public NPCServerItemProperty getCurrentServerItemProperty() {
-        return this.privateServerConfig.getServerItems().getStartItems()
+    public Optional<NPCServerItemProperty> getCurrentServerItemProperty() {
+        return this.privateServerConfig.getStartItems()
                 .stream()
                 .filter(npcServerItemProperty1 ->
                         npcServerItemProperty1.getTemplateToStart().equalsIgnoreCase(this.getCurrentServiceTemplate().getPrefix()+"/"+this.getCurrentServiceTemplate().getName()))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
 
     }
 
