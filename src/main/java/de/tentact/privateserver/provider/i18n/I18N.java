@@ -43,6 +43,8 @@ public class I18N {
 
     public static Translation PLAYER_NO_NPC_OPEN_PERMS = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-npc-open-perms");
 
+    public static Translation PLAYER_NO_TEMPLATE_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-template-start-perms");
+
     public static void createDefaultMessages() {
         Logger.getAnonymousLogger().log(Level.INFO, "Creating default messages");
         PREFIX.createDefaults("&ePServer x &7");
@@ -59,6 +61,7 @@ public class I18N {
         OWNER_LEFT_KICK_MESSAGE.createDefaults("Der Server wird nun gestoppt.", "%OWNER%");
         PLAYER_ALREADY_HAS_PSERVER.createDefaults("Du kannst nur einen PServer haben");
         PLAYER_NO_NPC_OPEN_PERMS.createDefaults("Du hast keine Rechte um diesen NPC zu öffnen. Kaufe dir Premium auf Server.de");
+        PLAYER_NO_TEMPLATE_START.createDefaults("Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ","%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
     }
 
 
