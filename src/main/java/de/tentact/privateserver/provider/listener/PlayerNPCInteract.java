@@ -16,6 +16,7 @@ import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
 import de.tentact.privateserver.provider.util.ItemBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +26,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PlayerNPCInteract implements Listener {
@@ -72,30 +75,31 @@ public class PlayerNPCInteract implements Listener {
             if (inventory.getSize() != this.serverConfig.getNPCInventory().getSize()) {
                 return;
             }
+            event.setCancelled(true);
             int clickedSlot = event.getSlot();
             Player player = (Player) event.getWhoClicked();
 
             this.getServerItemProperties(player)
                     .stream()
                     .filter(serverItemProperty ->
-                            serverItemProperty.getDisplayName().equalsIgnoreCase(inventoryView.getTitle()) && serverItemProperty.getInventorySlot() == clickedSlot)
+                            serverItemProperty.getDisplayName().equalsIgnoreCase(itemStack.getItemMeta().getDisplayName()))
                     .findFirst()
                     .ifPresent(serverItemProperty -> {
                         LanguagePlayer languagePlayer = this.playerExecutor.getLanguagePlayer(player.getUniqueId());
-                        if(languagePlayer == null) {
+                        if (languagePlayer == null) {
                             return;
                         }
                         String template = serverItemProperty.getTemplateToStart();
                         String templatePrefix = template.split("/")[0];
                         String templateName = template.split("/")[1];
-                        if(!player.hasPermission(serverItemProperty.getStartPermission())) {
+                        if (!player.hasPermission(serverItemProperty.getStartPermission())) {
                             languagePlayer.sendMessage(I18N.PLAYER_NO_TEMPLATE_START
                                     .replace("%TEMPLATE%", serverItemProperty.getTemplateToStart())
                                     .replace("%TEMPLATE_NAME%", templateName)
                                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
                             return;
                         }
-                        player.performCommand("pserver create "+template);
+                        player.performCommand("pserver create " + template);
                     });
 
         }

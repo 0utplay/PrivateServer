@@ -11,7 +11,7 @@ import org.bukkit.Location;
 
 public class NPCLocation {
 
-    private final transient Location location;
+    private transient Location location;
 
     private final double x;
     private final double y;
@@ -35,6 +35,10 @@ public class NPCLocation {
     }
 
     public Location getLocation() {
+        if(this.location != null) {
+            return this.location;
+        }
+        this.location = new Location(Bukkit.getWorld(worldName), x, y, z, yaw, pitch);
         return this.location;
     }
 }

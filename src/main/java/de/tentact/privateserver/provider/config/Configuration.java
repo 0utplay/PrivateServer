@@ -9,6 +9,7 @@ package de.tentact.privateserver.provider.config;
 import com.github.derrop.documents.DefaultDocument;
 import com.github.derrop.documents.Document;
 import com.github.derrop.documents.Documents;
+import de.tentact.privateserver.PrivateServer;
 
 import java.io.*;
 import java.util.Arrays;
@@ -22,22 +23,24 @@ public class Configuration {
 
     private final File configFile = new File("plugins/PrivateServer", "config.json");
 
-    public Configuration() {
+    public Configuration(PrivateServer privateServer) {
 
         if (configFile.exists()) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Config already exists");
+            privateServer.logInfo("Found config.json. Reading config.json...");
             document = Documents.jsonStorage().read(configFile);
             return;
         }
         configFile.getParentFile().mkdirs();
-        Logger.getAnonymousLogger().log(Level.INFO, "Config created");
+        privateServer.logInfo("No config.json found...");
+        privateServer.logInfo("Creating new config.json");
         document.append("config", new PrivateServerConfig(
                 "PServer",
                 "pserver.basecommand",
+                "PrivateServer",
                 new NPCInventory(
                         "Test",
                         "pserver.opennpc",
-                        1
+                        9
                 ),
                 new NPCSetting(
                         true,

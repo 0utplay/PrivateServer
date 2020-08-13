@@ -11,14 +11,15 @@ import de.dytanic.cloudnet.driver.service.ServiceTask;
 
 public class PrivateServerConfig {
 
-    private final String privateServerTaskName, baseCommandPermission;
+    private final String privateServerTaskName, baseCommandPermission, npcName;
     private final NPCInventory npcInventory;
     private NPCSetting npcSetting;
     private final NPCInventoryCreateServerItems serverItems;
 
-    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, NPCInventory npcInventory, NPCSetting npcSetting, NPCInventoryCreateServerItems serverItems) {
+    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, String npcName, NPCInventory npcInventory, NPCSetting npcSetting, NPCInventoryCreateServerItems serverItems) {
         this.privateServerTaskName = privateServerTaskName;
         this.baseCommandPermission = baseCommandPermission;
+        this.npcName = npcName;
         this.npcSetting = npcSetting;
         this.npcInventory = npcInventory;
         this.serverItems = serverItems;
@@ -50,5 +51,9 @@ public class PrivateServerConfig {
 
     public void setNPCSettings(NPCSetting npcSetting) {
         this.npcSetting = npcSetting;
+    }
+
+    public String getNPCName() {
+        return npcName;
     }
 }

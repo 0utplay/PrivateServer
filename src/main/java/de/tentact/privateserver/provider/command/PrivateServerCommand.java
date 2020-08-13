@@ -6,7 +6,6 @@ package de.tentact.privateserver.provider.command;
     Uhrzeit: 13:59
 */
 
-import com.github.juliarn.npc.NPC;
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceInfoSnapshot;
 import de.dytanic.cloudnet.driver.service.ServiceTemplate;
@@ -126,8 +125,12 @@ public class PrivateServerCommand implements CommandExecutor {
                     this.privateServerConfig.setNPCSettings(currentNPCSetting.setNPCLocation(null));
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                 } else if (args[1].equalsIgnoreCase("create")) {
-                    if (this.privateServer.getNpcPool().getNPCs().size() == 0) {
+                    if (this.privateServer.getNPCPool().getNPCs().size() == 0) {
                         this.privateServer.removeNPC();
+                    }
+                    if(args.length < 4) {
+                        languagePlayer.sendMessage(I18N.COMMAND_HELP);
+                        return false;
                     }
                     if (!this.isBoolean(args[2])|| !this.isBoolean(args[3])) {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP);

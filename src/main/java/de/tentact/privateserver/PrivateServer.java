@@ -25,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PrivateServer extends JavaPlugin {
 
@@ -34,7 +35,6 @@ public class PrivateServer extends JavaPlugin {
 
     private NPCPool npcPool;
     private int npcId;
-    Profile profile = new Profile(UUID.randomUUID(), "187", null);
 
     public void onEnable() {
         if (this.isPrivateServer()) {
@@ -54,17 +54,18 @@ public class PrivateServer extends JavaPlugin {
     }
 
     void initProvider() {
-        this.getLogger().log(Level.INFO, "Init provider");
-        I18N.createDefaultMessages();
-        this.configuration = new Configuration();
+        this.getLogger().log(Level.INFO, "Initialising PrivateServer Provider...");
+        I18N.createDefaultMessages(this);
+        this.configuration = new Configuration(this);
         this.privateServerUtil = new PrivateServerUtil(this);
+        npcPool = new NPCPool(this);
         this.spawnNPC();
         new PlayerNPCInteract(this);
     }
 
     void initPrivateServer() {
-        this.getLogger().log(Level.INFO, "Init PServer");
-        this.configuration = new Configuration();
+        this.getLogger().log(Level.INFO, "Initialising PrivateServer");
+        this.configuration = new Configuration(this);
         this.currentPrivateServiceUtil = new CurrentPrivateServiceUtil(this);
         this.currentPrivateServiceUtil.sendOwner();
 
@@ -83,14 +84,13 @@ public class PrivateServer extends JavaPlugin {
     }
 
     public void spawnNPC() {
-        if(this.configuration.getPrivateServerConfig().getNPCSettings().getNpcLocation() != null) {
+        if(this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
-
-            npcPool = new NPCPool(this);
+            Profile profile = new Profile(UUID.randomUUID(), this.configuration.getPrivateServerConfig().getNPCName(), null);
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitadePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())
-                    .location(settings.getNpcLocation().getLocation())
+                    .location(settings.getNPCLocation().getLocation())
                     .build(npcPool).getEntityId();
         }
     }
@@ -99,7 +99,15 @@ public class PrivateServer extends JavaPlugin {
         this.npcPool.removeNPC(this.npcId);
     }
 
-    public NPCPool getNpcPool() {
+    public NPCPool getNPCPool() {
         return npcPool;
+    }
+
+    public void logInfo(String message) {
+        this.getLogger().log(Level.INFO, message);
+    }
+
+    public void logWarning(String message) {
+        this.getLogger().log(Level.WARNING, message);
     }
 }

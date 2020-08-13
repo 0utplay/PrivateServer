@@ -2,7 +2,8 @@ name: PServer
 author: 0utplay
 version: 1.0
 main: de.tentact.privateserver.PrivateServer
-depend: [LanguageAPI, CloudNet-Bridge]
+api-version: 1.13
+depend: [LanguageAPI, CloudNet-Bridge, ProtocolLib]
 commands:
   privateserver:
     aliases: [pserver, ps]

@@ -9,6 +9,7 @@ package de.tentact.privateserver.provider.i18n;
 
 import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.i18n.Translation;
+import de.tentact.privateserver.PrivateServer;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,8 +46,8 @@ public class I18N {
 
     public static Translation PLAYER_NO_TEMPLATE_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-template-start-perms");
 
-    public static void createDefaultMessages() {
-        Logger.getAnonymousLogger().log(Level.INFO, "Creating default messages");
+    public static void createDefaultMessages(PrivateServer privateServer) {
+        privateServer.logInfo("Creating default translations");
         PREFIX.createDefaults("&ePServer x &7");
         NO_BASECOMMAND_PERMISSION.createDefaults("Dazu hast du keine Rechte");
         COMMAND_HELP.createDefaults("Nutze /pserver create <Prefix/Name>\\n" +

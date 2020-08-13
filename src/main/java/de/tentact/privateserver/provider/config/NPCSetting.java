@@ -26,7 +26,7 @@ public class NPCSetting {
         return this.shouldLookAtPlayer;
     }
 
-    public NPCLocation getNpcLocation() {
+    public NPCLocation getNPCLocation() {
         return this.npcLocation;
     }
 

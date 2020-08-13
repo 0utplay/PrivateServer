@@ -11,21 +11,17 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ItemBuilder {
 
     private final ItemStack itemStack;
-    private final ItemMeta itemMeta;
-
-    public ItemBuilder(ItemStack itemStack) {
-        this.itemStack = itemStack;
-        this.itemMeta = itemStack.getItemMeta();
-    }
 
     public ItemBuilder(Material material, int amount) {
-        this(new ItemStack(material, amount));
+        if (material == null) {
+            throw new NullPointerException("Check your materials in your config.json.\nAlso ONLY use items that exist in your SERVER version.\nThe shown names aren't the same as in code. Please use those ones for code.");
+        }
+        this.itemStack = new ItemStack(material, amount);
     }
 
     public ItemBuilder(Material material) {
@@ -33,11 +29,11 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(String materialName) {
-        this(Material.getMaterial(materialName, true));
+        this(Material.getMaterial(materialName));
     }
 
     public ItemBuilder setSubId(byte subId) {
-        if(subId == -1) {
+        if (subId == -1) {
             return this;
         }
         this.itemStack.setDurability(subId);
@@ -46,9 +42,10 @@ public class ItemBuilder {
 
     public ItemBuilder(NPCServerItemProperty serverItemProperty) {
         this(serverItemProperty.getMaterialName());
-        this.setDisplayName(serverItemProperty.getDisplayName());
-        this.setLore(serverItemProperty.getLore());
-        this.setSubId(serverItemProperty.getSubid());
+        this
+                .setDisplayName(serverItemProperty.getDisplayName())
+                .setLore(serverItemProperty.getLore())
+                .setSubId(serverItemProperty.getSubid());
     }
 
     public ItemBuilder setLore(List<String> lore) {
@@ -57,12 +54,13 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setDisplayName(String displayName) {
-        this.itemMeta.setDisplayName(displayName);
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.setDisplayName(displayName);
+        this.itemStack.setItemMeta(itemMeta);
         return this;
     }
 
     public ItemStack build() {
-        this.itemStack.setItemMeta(this.itemMeta);
         return this.itemStack;
     }
 
