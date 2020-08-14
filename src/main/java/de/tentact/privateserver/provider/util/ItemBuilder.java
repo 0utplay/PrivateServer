@@ -44,7 +44,7 @@ public class ItemBuilder {
         this
                 .setDisplayName(serverItemProperty.getDisplayName())
                 .setLore(serverItemProperty.getLore())
-                .setSubId(serverItemProperty.getSubid());
+                .setSubId(serverItemProperty.getSubId());
     }
 
     public ItemBuilder setLore(List<String> lore) {

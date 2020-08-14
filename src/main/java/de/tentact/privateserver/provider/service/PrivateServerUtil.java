@@ -33,10 +33,7 @@ public class PrivateServerUtil {
         this.privateServerConfig = this.privateServer.getConfiguration().getPrivateServerConfig();
     }
 
-    public boolean startPrivateServer(UUID serverOwner, String templatePrefix, final String templateName) {
-        if (this.hasPrivateServer(serverOwner)) {
-            return false;
-        }
+    public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate) {
         if (this.privateServer.getConfiguration().getPrivateServerConfig().getPrivateServerTask() == null) {
             return false;
         }
@@ -45,15 +42,9 @@ public class PrivateServerUtil {
         if (serviceTask == null) {
             return false;
         }
-
-        ServiceTemplate serviceTemplate = this.cloudNetDriver.getLocalTemplateStorageTemplates()
-                .stream().filter(template -> template.getName().equalsIgnoreCase(templateName) && template.getPrefix().equalsIgnoreCase(templatePrefix)).findFirst().orElse(null);
-
-        if (serviceTemplate == null) {
-            return false;
-        }
-
-        JsonDocument document = new JsonDocument("serverowner", serverOwner).append("templatePrefix", templatePrefix).append("templateName", templateName);
+        JsonDocument document = new JsonDocument("serverowner", serverOwner)
+                .append("templatePrefix", serviceTemplate.getPrefix())
+                .append("templateName", serviceTemplate.getName());
 
         ServiceInfoSnapshot serviceInfoSnapshot = ServiceConfiguration
                 .builder(serviceTask)
@@ -66,15 +57,6 @@ public class PrivateServerUtil {
         }
         serviceInfoSnapshot.provider().startAsync();
         return true;
-    }
-
-    public boolean hasPrivateServer(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.privateServerConfig.getPrivateServerTaskName())) {
-            if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
-                return true;
-            }
-        }
-        return false;
     }
     
     public void createPrivateServer(Player player, String template) {
@@ -125,7 +107,7 @@ public class PrivateServerUtil {
             return;
         }
 
-        boolean started = this.privateServer.getPrivateServerUtil().startPrivateServer(languagePlayer.getUniqueId(), templatePrefix, templateName);
+        boolean started = this.privateServer.getPrivateServerUtil().startPrivateServer(languagePlayer.getUniqueId(), serviceTemplate);
         if (started) {
             languagePlayer.sendMessage(I18N.STARTING_PSERVER
                     .replace("%TEMPLATE%", template)
@@ -134,6 +116,15 @@ public class PrivateServerUtil {
             return;
         }
         languagePlayer.sendMessage(I18N.STARTING_PSERVER_ERROR);
+    }
+
+    public boolean hasPrivateServer(UUID serverOwner) {
+        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.privateServerConfig.getPrivateServerTaskName())) {
+            if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

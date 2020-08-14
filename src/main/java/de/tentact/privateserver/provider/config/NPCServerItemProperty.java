@@ -13,18 +13,18 @@ import java.util.List;
 public class NPCServerItemProperty {
 
     private final String displayName, materialName, templateToStart, startPermission;
-    private final byte subid;
+    private final byte subId;
     private final List<String> lore;
     private final int inventorySlot;
     private final boolean showIfNoPerms;
     private final boolean autoStopOnOwnerLeave;
 
-    public NPCServerItemProperty(String displayName, String materialName, String templateToStart, String startPermission, byte subid, List<String> lore, int inventorySlot, boolean showIfNoPerms, boolean autoStopOnOwnerLeave) {
+    public NPCServerItemProperty(String displayName, String materialName, String templateToStart, String startPermission, byte subId, List<String> lore, int inventorySlot, boolean showIfNoPerms, boolean autoStopOnOwnerLeave) {
         this.displayName = displayName;
         this.materialName = materialName;
         this.templateToStart = templateToStart;
         this.startPermission = startPermission;
-        this.subid = subid;
+        this.subId = subId;
         this.lore = lore;
         this.inventorySlot = inventorySlot;
         this.showIfNoPerms = showIfNoPerms;
@@ -47,8 +47,8 @@ public class NPCServerItemProperty {
         return this.startPermission;
     }
 
-    public byte getSubid() {
-        return this.subid;
+    public byte getSubId() {
+        return this.subId;
     }
 
     public List<String> getLore() {

@@ -106,7 +106,7 @@ public class PrivateServer extends JavaPlugin {
         return npcPool;
     }
 
-    public void checkConfiguration() {
+    private void checkConfiguration() {
         PrivateServerConfig serverConfig = this.configuration.getPrivateServerConfig();
 
         if (serverConfig.getNPCInventory().getSize() < serverConfig.getStartItems().size()) {
