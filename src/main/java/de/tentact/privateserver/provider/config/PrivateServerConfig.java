@@ -17,13 +17,15 @@ public class PrivateServerConfig {
     private final String privateServerTaskName, baseCommandPermission, npcName;
     private final NPCInventory npcInventory;
     private NPCSetting npcSetting;
+    private final NPCCurrentServerItemProperty currentServerItem;
     private final Collection<NPCServerItemProperty> startItems;
 
-    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, String npcName, NPCInventory npcInventory, NPCSetting npcSetting, Collection<NPCServerItemProperty> startItems) {
+    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, String npcName, NPCInventory npcInventory, NPCSetting npcSetting, NPCCurrentServerItemProperty currentServerItem, Collection<NPCServerItemProperty> startItems) {
         this.privateServerTaskName = privateServerTaskName;
         this.baseCommandPermission = baseCommandPermission;
         this.npcName = npcName;
         this.npcSetting = npcSetting;
+        this.currentServerItem = currentServerItem;
         this.npcInventory = npcInventory;
         this.startItems = startItems;
     }
@@ -50,6 +52,10 @@ public class PrivateServerConfig {
 
     public NPCSetting getNPCSettings() {
         return this.npcSetting;
+    }
+
+    public NPCCurrentServerItemProperty getCurrentServerItem() {
+        return this.currentServerItem;
     }
 
     public void setNPCSettings(NPCSetting npcSetting) {

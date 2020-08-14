@@ -18,8 +18,9 @@ public class NPCServerItemProperty {
     private final int inventorySlot;
     private final boolean showIfNoPerms;
     private final boolean autoStopOnOwnerLeave;
+    private final boolean autoStopIfEmpty;
 
-    public NPCServerItemProperty(String displayName, String materialName, String templateToStart, String startPermission, byte subId, List<String> lore, int inventorySlot, boolean showIfNoPerms, boolean autoStopOnOwnerLeave) {
+    public NPCServerItemProperty(String displayName, String materialName, String templateToStart, String startPermission, byte subId, List<String> lore, int inventorySlot, boolean showIfNoPerms, boolean autoStopOnOwnerLeave, boolean autoStopIfEmpty) {
         this.displayName = displayName;
         this.materialName = materialName;
         this.templateToStart = templateToStart;
@@ -29,6 +30,7 @@ public class NPCServerItemProperty {
         this.inventorySlot = inventorySlot;
         this.showIfNoPerms = showIfNoPerms;
         this.autoStopOnOwnerLeave = autoStopOnOwnerLeave;
+        this.autoStopIfEmpty = autoStopIfEmpty;
     }
 
     public String getDisplayName() {
@@ -65,5 +67,9 @@ public class NPCServerItemProperty {
 
     public boolean isAutoStopOnOwnerLeave() {
         return this.autoStopOnOwnerLeave;
+    }
+
+    public boolean isAutoStopIfEmpty() {
+        return autoStopIfEmpty;
     }
 }

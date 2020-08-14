@@ -45,18 +45,24 @@ public class Configuration {
                         true,
                         null
                 ),
+                new NPCCurrentServerItemProperty(
+                        "Dein aktueller Server %displayname%",
+                        "DIAMOND_BLOCK",
+                        (byte) -1,
+                        Collections.singletonList("Klicke um deinem bereits gestarten Server zu joinen"),
+                        10),
                 Collections.singletonList(
                         new NPCServerItemProperty(
                                 "&5BedWars - Map",
                                 "RED_BED",
                                 "TemplatePrefix/TemplateName",
                                 "start.permission.template",
-                                (byte) 0,
-                                Arrays.asList("Click to start server", "Lore2"),
+                                (byte) -1,
+                                Arrays.asList("Click to start server", "Template"),
                                 0,
                                 true,
-                                true
-                        )
+                                true,
+                                false)
                 )
         )).json().write(configFile);
     }

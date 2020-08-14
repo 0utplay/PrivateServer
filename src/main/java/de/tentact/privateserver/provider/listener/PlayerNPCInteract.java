@@ -56,6 +56,9 @@ public class PlayerNPCInteract implements Listener {
             ItemBuilder itemBuilder = new ItemBuilder(serverItemProperty);
             serverItemInventory.setItem(serverItemProperty.getInventorySlot(), itemBuilder.build());
         });
+        if(this.privateServer.getPrivateServerUtil().hasPrivateServer(player.getUniqueId())) {
+            serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem()).build());
+        }
         player.openInventory(serverItemInventory);
     }
 
@@ -74,7 +77,6 @@ public class PlayerNPCInteract implements Listener {
             }
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
-
             this.getServerItemProperties(player)
                     .stream()
                     .filter(serverItemProperty ->

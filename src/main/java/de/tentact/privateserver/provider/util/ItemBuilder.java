@@ -6,6 +6,7 @@ package de.tentact.privateserver.provider.util;
     Uhrzeit: 11:49
 */
 
+import de.tentact.privateserver.provider.config.NPCCurrentServerItemProperty;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +20,9 @@ public class ItemBuilder {
 
     public ItemBuilder(Material material, int amount) {
         if (material == null) {
-            throw new NullPointerException("Check your materials in your config.json.\nAlso ONLY use items that exist in your SERVER version.\nThe shown names aren't the same as in code. Please use those ones for code.");
+            throw new NullPointerException("Check your materials in your config.json." +
+                    "\nAlso ONLY use items that exist in your SERVER version." +
+                    "\nThe shown names aren't the same as in code. Please use those ones for code.");
         }
         this.itemStack = new ItemStack(material, amount);
     }
@@ -40,6 +43,14 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(NPCServerItemProperty serverItemProperty) {
+        this(serverItemProperty.getMaterialName());
+        this
+                .setDisplayName(serverItemProperty.getDisplayName())
+                .setLore(serverItemProperty.getLore())
+                .setSubId(serverItemProperty.getSubId());
+    }
+
+    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty) {
         this(serverItemProperty.getMaterialName());
         this
                 .setDisplayName(serverItemProperty.getDisplayName())
