@@ -12,6 +12,7 @@ import de.dytanic.cloudnet.driver.service.ServiceConfiguration;
 import de.dytanic.cloudnet.driver.service.ServiceInfoSnapshot;
 import de.dytanic.cloudnet.driver.service.ServiceTask;
 import de.dytanic.cloudnet.driver.service.ServiceTemplate;
+import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.player.LanguagePlayer;
 import de.tentact.privateserver.PrivateServer;
@@ -20,6 +21,7 @@ import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class PrivateServerUtil {
@@ -27,10 +29,12 @@ public class PrivateServerUtil {
     private final PrivateServer privateServer;
     private final PrivateServerConfig privateServerConfig;
     private final CloudNetDriver cloudNetDriver = CloudNetDriver.getInstance();
+    private final IPlayerManager iPlayerManager;
 
     public PrivateServerUtil(PrivateServer privateServer) {
         this.privateServer = privateServer;
         this.privateServerConfig = this.privateServer.getConfiguration().getPrivateServerConfig();
+        this.iPlayerManager = this.cloudNetDriver.getServicesRegistry().getFirstService(IPlayerManager.class);
     }
 
     public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate) {
@@ -52,20 +56,21 @@ public class PrivateServerUtil {
                 .properties(document)
                 .build()
                 .createNewService();
-        if(serviceInfoSnapshot == null) {
+        if (serviceInfoSnapshot == null) {
             return false;
         }
         serviceInfoSnapshot.provider().startAsync();
         return true;
     }
-    
+
     public void createPrivateServer(Player player, String template) {
         LanguagePlayer languagePlayer = LanguageAPI.getInstance().getPlayerExecutor().getLanguagePlayer(player.getUniqueId());
-        if(languagePlayer == null) {
+        if (languagePlayer == null) {
             return;
         }
         if (this.hasPrivateServer(player.getUniqueId())) {
             languagePlayer.sendMessage(I18N.PLAYER_ALREADY_HAS_PSERVER);
+            return;
         }
 
         if (!template.matches("([A-Za-z0-9]+\\/[A-Za-z0-9]+)")) {
@@ -125,6 +130,27 @@ public class PrivateServerUtil {
             }
         }
         return false;
+    }
+
+    public void sendOwner(UUID serverOwner) {
+        if (!this.hasPrivateServer(serverOwner)) {
+            return;
+        }
+        this.getServiceInfoSnapshot(serverOwner).ifPresent(serviceInfoSnapshot ->
+                this.iPlayerManager.getPlayerExecutor(serverOwner).connect(serviceInfoSnapshot.getName()));
+    }
+
+    public Optional<ServiceInfoSnapshot> getServiceInfoSnapshot(UUID serverOwner) {
+        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.privateServerConfig.getPrivateServerTaskName())) {
+            if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
+                return Optional.of(cloudService);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public <T> T getProperty(ServiceInfoSnapshot serviceInfoSnapshot, String name, Class<T> clazz) {
+        return serviceInfoSnapshot.getProperties().get(name, clazz);
     }
 
 }

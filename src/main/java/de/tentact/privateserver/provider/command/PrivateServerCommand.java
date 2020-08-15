@@ -14,6 +14,7 @@ import de.tentact.privateserver.provider.config.NPCLocation;
 import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.i18n.I18N;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -73,13 +74,18 @@ public class PrivateServerCommand implements CommandExecutor {
                         return false;
                     }
                     if (this.privateServer.getNPCPool().getNPCs().size() != 0) {
+                        Bukkit.broadcastMessage("REMOVING other npcs");
                         this.privateServer.removeNPC();
                     }
+                    Bukkit.broadcastMessage("Create NPC");
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
                     NPCSetting setting = new NPCSetting(imitatePlayer, lookAtPlayer, new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
+                    if(this.privateServerConfig.getNPCSettings().getNPCLocation() == null) {
+                        Bukkit.broadcastMessage("NULL");
+                    }
                     this.privateServer.spawnNPC();
                 } else {
                     languagePlayer.sendMessage(I18N.COMMAND_HELP);

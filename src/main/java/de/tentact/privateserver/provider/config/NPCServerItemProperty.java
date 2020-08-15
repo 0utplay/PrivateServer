@@ -8,6 +8,8 @@ package de.tentact.privateserver.provider.config;
 
 import org.bukkit.ChatColor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NPCServerItemProperty {
@@ -26,7 +28,7 @@ public class NPCServerItemProperty {
         this.templateToStart = templateToStart;
         this.startPermission = startPermission;
         this.subId = subId;
-        this.lore = lore;
+        this.lore = new ArrayList<>(lore);
         this.inventorySlot = inventorySlot;
         this.showIfNoPerms = showIfNoPerms;
         this.autoStopOnOwnerLeave = autoStopOnOwnerLeave;
@@ -34,7 +36,10 @@ public class NPCServerItemProperty {
     }
 
     public String getDisplayName() {
-        return ChatColor.translateAlternateColorCodes('&', this.displayName);
+        return ChatColor.translateAlternateColorCodes('&', this.displayName)
+                .replace("%TEMPLATE%", this.templateToStart)
+                .replace("%TEMPLATE_PREFIX%", this.templateToStart.split("/")[0])
+                .replace("%TEMPLATE_NAME%", this.templateToStart.split("/")[1]);
     }
 
     public String getMaterialName() {
@@ -54,6 +59,9 @@ public class NPCServerItemProperty {
     }
 
     public List<String> getLore() {
+        Collections.replaceAll(lore, "%TEMPLATE%", this.templateToStart);
+        Collections.replaceAll(lore, "%TEMPLATE_PREFIX%", this.templateToStart.split("/")[0]);
+        Collections.replaceAll(lore, "%TEMPLATE_NAME%", this.templateToStart.split("/")[1]);
         return this.lore;
     }
 

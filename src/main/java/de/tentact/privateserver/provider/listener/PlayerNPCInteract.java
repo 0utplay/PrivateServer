@@ -56,9 +56,14 @@ public class PlayerNPCInteract implements Listener {
             ItemBuilder itemBuilder = new ItemBuilder(serverItemProperty);
             serverItemInventory.setItem(serverItemProperty.getInventorySlot(), itemBuilder.build());
         });
-        if(this.privateServer.getPrivateServerUtil().hasPrivateServer(player.getUniqueId())) {
-            serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem()).build());
-        }
+        this.privateServer.getPrivateServerUtil().getServiceInfoSnapshot(player.getUniqueId()).ifPresent(serviceInfoSnapshot -> {
+            String template = this.privateServer.getPrivateServerUtil().getProperty(serviceInfoSnapshot, "templatePrefix", String.class)
+                    + "/" + this.privateServer.getPrivateServerUtil().getProperty(serviceInfoSnapshot, "templateName", String.class);
+            if(this.serverConfig.getCurrentServerItem() != null) {
+                serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem(), template).build());
+            }
+        });
+
         player.openInventory(serverItemInventory);
     }
 
@@ -76,6 +81,7 @@ public class PlayerNPCInteract implements Listener {
                 return;
             }
             event.setCancelled(true);
+            int clickedSlot = event.getSlot();
             Player player = (Player) event.getWhoClicked();
             this.getServerItemProperties(player)
                     .stream()
@@ -99,7 +105,16 @@ public class PlayerNPCInteract implements Listener {
                         }
                         this.privateServer.getPrivateServerUtil().createPrivateServer(player, template);
                     });
-
+            if (!this.privateServer.getPrivateServerUtil().hasPrivateServer(player.getUniqueId())) {
+                return;
+            }
+            if (this.serverConfig.getCurrentServerItem() == null) {
+                return;
+            }
+            if (clickedSlot != this.serverConfig.getCurrentServerItem().getInventorySlot()) {
+                return;
+            }
+            this.privateServer.getPrivateServerUtil().sendOwner(player.getUniqueId());
         }
     }
 

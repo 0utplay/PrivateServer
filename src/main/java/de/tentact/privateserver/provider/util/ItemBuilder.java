@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ItemBuilder {
@@ -50,11 +51,18 @@ public class ItemBuilder {
                 .setSubId(serverItemProperty.getSubId());
     }
 
-    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty) {
+    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty, String startTemplate) {
         this(serverItemProperty.getMaterialName());
+        List<String> lore = serverItemProperty.getLore();
+        Collections.replaceAll(lore, "%TEMPLATE%", startTemplate);
+        Collections.replaceAll(lore, "%TEMPLATE_PREFIX%", startTemplate.split("/")[0]);
+        Collections.replaceAll(lore, "%TEMPLATE_NAME%", startTemplate.split("/")[1]);
+
         this
-                .setDisplayName(serverItemProperty.getDisplayName())
-                .setLore(serverItemProperty.getLore())
+                .setDisplayName(serverItemProperty.getDisplayName().replace("%TEMPLATE%", startTemplate)
+                        .replace("%TEMPLATE_PREFIX%", startTemplate.split("/")[0])
+                        .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1]))
+                .setLore(lore)
                 .setSubId(serverItemProperty.getSubId());
     }
 

@@ -89,7 +89,7 @@ public class PrivateServer extends JavaPlugin {
     public void spawnNPC() {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
-            Profile profile = new Profile(UUID.randomUUID(), this.configuration.getPrivateServerConfig().getNPCName(), null);
+            Profile profile = new Profile(UUID.randomUUID(), "187Juliorn", null);
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())

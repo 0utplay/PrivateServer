@@ -22,7 +22,6 @@ public class Configuration {
     private final File configFile = new File("plugins/PrivateServer", "config.json");
 
     public Configuration(PrivateServer privateServer) {
-
         if (configFile.exists()) {
             privateServer.logInfo("Found config.json. Reading config.json...");
             document = Documents.jsonStorage().read(configFile);
@@ -50,15 +49,15 @@ public class Configuration {
                         "DIAMOND_BLOCK",
                         (byte) -1,
                         Collections.singletonList("Klicke um deinem bereits gestarten Server zu joinen"),
-                        10),
+                        8),
                 Collections.singletonList(
                         new NPCServerItemProperty(
                                 "&5BedWars - Map",
-                                "RED_BED",
+                                "GRASS",
                                 "TemplatePrefix/TemplateName",
                                 "start.permission.template",
                                 (byte) -1,
-                                Arrays.asList("Click to start server", "Template"),
+                                Arrays.asList("Click to start server", "%TEMPLATE%"),
                                 0,
                                 true,
                                 true,
@@ -72,6 +71,7 @@ public class Configuration {
     }
 
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
-        new DefaultDocument("config", privateServerConfig).json().write(configFile);
+        document = new DefaultDocument("config", privateServerConfig);
+        document.json().write(configFile);
     }
 }

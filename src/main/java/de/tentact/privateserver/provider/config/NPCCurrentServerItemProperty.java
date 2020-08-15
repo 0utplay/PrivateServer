@@ -6,6 +6,7 @@ package de.tentact.privateserver.provider.config;
     Uhrzeit: 15:31
 */
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NPCCurrentServerItemProperty {
@@ -21,7 +22,7 @@ public class NPCCurrentServerItemProperty {
         this.displayName = displayName;
         this.materialName = materialName;
         this.subId = subId;
-        this.lore = lore;
+        this.lore = new ArrayList<>(lore);
         this.inventorySlot = inventorySlot;
     }
 
