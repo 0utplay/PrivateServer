@@ -69,7 +69,7 @@ public class PrivateServer extends JavaPlugin {
     void initPrivateServer() {
         this.getLogger().log(Level.INFO, "Initialising PrivateServer");
         this.configuration = new Configuration(this);
-        this.currentPrivateServiceUtil = new CurrentPrivateServiceUtil(this);
+        this.currentPrivateServiceUtil = new CurrentPrivateServiceUtil();
         this.currentPrivateServiceUtil.sendOwner();
 
         PluginManager pluginManager = Bukkit.getPluginManager();

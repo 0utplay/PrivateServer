@@ -33,24 +33,22 @@ public class PlayerQuitListener implements Listener {
         if (!this.currentPrivateServiceUtil.isPrivateServer()) {
             return;
         }
-        this.currentPrivateServiceUtil.getCurrentServerItemProperty().ifPresent(serverItemProperty -> {
-            if (serverItemProperty.isAutoStopOnOwnerLeave() && player.getUniqueId().equals(this.currentPrivateServiceUtil.getOwner())) {
-                languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.replace("%OWNER%", player.getName()));
+        if (this.currentPrivateServiceUtil.isAutoStopOnOwnerLeave() && player.getUniqueId().equals(this.currentPrivateServiceUtil.getOwner())) {
+            languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.replace("%OWNER%", player.getName()));
 
-                Bukkit.getScheduler().runTaskLater(privateServer, () -> {
-                    languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.replace("%OWNER%", player.getName()));
-                    Bukkit.shutdown();
-                }, 20 * 15L);
-                return;
-            }
-            if (!serverItemProperty.isAutoStopIfEmpty()) {
-                return;
-            }
-            if (Bukkit.getOnlinePlayers().size() != 0) {
-                return;
-            }
-            Bukkit.getScheduler().runTaskLater(privateServer, Bukkit::shutdown, 20 * 2L);
-        });
+            Bukkit.getScheduler().runTaskLater(privateServer, () -> {
+                languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.replace("%OWNER%", player.getName()));
+                Bukkit.shutdown();
+            }, 20 * 15L);
+            return;
+        }
+        if (!this.currentPrivateServiceUtil.isAutoStopOnEmpty()) {
+            return;
+        }
+        if (Bukkit.getOnlinePlayers().size() != 0) {
+            return;
+        }
+        Bukkit.getScheduler().runTaskLater(privateServer, Bukkit::shutdown, 20 * 2L);
 
 
     }

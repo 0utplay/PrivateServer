@@ -7,26 +7,15 @@ package de.tentact.privateserver.service;
 */
 
 import de.dytanic.cloudnet.driver.CloudNetDriver;
-import de.dytanic.cloudnet.driver.service.ServiceTemplate;
 import de.dytanic.cloudnet.ext.bridge.player.ICloudPlayer;
 import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import de.dytanic.cloudnet.wrapper.Wrapper;
-import de.tentact.privateserver.PrivateServer;
-import de.tentact.privateserver.provider.config.NPCServerItemProperty;
-import de.tentact.privateserver.provider.config.PrivateServerConfig;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class CurrentPrivateServiceUtil {
 
     private final IPlayerManager iPlayerManager = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class);
-
-    private final PrivateServerConfig privateServerConfig;
-
-    public CurrentPrivateServiceUtil(PrivateServer privateServer) {
-        this.privateServerConfig = privateServer.getConfiguration().getPrivateServerConfig();
-    }
 
     public void sendOwner() {
         if (!this.isPrivateServer()) {
@@ -53,21 +42,11 @@ public class CurrentPrivateServiceUtil {
         return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getProperties().get(name, clazz);
     }
 
-    public Optional<NPCServerItemProperty> getCurrentServerItemProperty() {
-        return this.privateServerConfig.getStartItems()
-                .stream()
-                .filter(npcServerItemProperty1 ->
-                        npcServerItemProperty1.getTemplateToStart().equalsIgnoreCase(this.getCurrentServiceTemplate().getPrefix()+"/"+this.getCurrentServiceTemplate().getName()))
-                .findFirst();
-
+    public boolean isAutoStopOnOwnerLeave() {
+        return this.getProperty("autoStopOnOwnerLeave", Boolean.class);
     }
 
-    public ServiceTemplate getCurrentServiceTemplate() {
-        return CloudNetDriver.getInstance().getLocalTemplateStorageTemplates()
-                .stream()
-                .filter(serviceTemplate -> serviceTemplate.getName().equalsIgnoreCase(this.getProperty("templateName", String.class))
-                        && serviceTemplate.getPrefix().equalsIgnoreCase(this.getProperty("templatePrefix", String.class)))
-                .findFirst()
-                .orElse(null);
+    public boolean isAutoStopOnEmpty() {
+        return this.getProperty("autoStopOnEmpty", Boolean.class);
     }
 }

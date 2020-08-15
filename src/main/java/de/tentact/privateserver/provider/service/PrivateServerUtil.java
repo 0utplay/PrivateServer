@@ -37,7 +37,7 @@ public class PrivateServerUtil {
         this.iPlayerManager = this.cloudNetDriver.getServicesRegistry().getFirstService(IPlayerManager.class);
     }
 
-    public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate) {
+    public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate, NPCServerItemProperty serverItemProperty) {
         if (this.privateServer.getConfiguration().getPrivateServerConfig().getPrivateServerTask() == null) {
             return false;
         }
@@ -48,7 +48,9 @@ public class PrivateServerUtil {
         }
         JsonDocument document = new JsonDocument("serverowner", serverOwner)
                 .append("templatePrefix", serviceTemplate.getPrefix())
-                .append("templateName", serviceTemplate.getName());
+                .append("templateName", serviceTemplate.getName())
+                .append("autoStopOnOwnerLeave", serverItemProperty.isAutoStopOnOwnerLeave())
+                .append("autoStopOnEmpty", serverItemProperty.isAutoStopIfEmpty());
 
         ServiceInfoSnapshot serviceInfoSnapshot = ServiceConfiguration
                 .builder(serviceTask)
@@ -112,7 +114,7 @@ public class PrivateServerUtil {
             return;
         }
 
-        boolean started = this.privateServer.getPrivateServerUtil().startPrivateServer(languagePlayer.getUniqueId(), serviceTemplate);
+        boolean started = this.privateServer.getPrivateServerUtil().startPrivateServer(languagePlayer.getUniqueId(), serviceTemplate, serverItem);
         if (started) {
             languagePlayer.sendMessage(I18N.STARTING_PSERVER
                     .replace("%TEMPLATE%", template)
