@@ -10,19 +10,17 @@ import com.github.juliarn.npc.NPC;
 import com.github.juliarn.npc.NPCPool;
 import com.github.juliarn.npc.profile.Profile;
 import de.dytanic.cloudnet.wrapper.Wrapper;
+import de.tentact.privateserver.i18n.I18N;
 import de.tentact.privateserver.provider.command.PrivateServerCommand;
 import de.tentact.privateserver.provider.config.Configuration;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
-import de.tentact.privateserver.provider.i18n.I18N;
 import de.tentact.privateserver.provider.listener.PlayerNPCInteract;
 import de.tentact.privateserver.provider.service.PrivateServerUtil;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
 import de.tentact.privateserver.service.listener.PlayerQuitListener;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -39,6 +37,7 @@ public class PrivateServer extends JavaPlugin {
     private int npcId;
 
     public void onEnable() {
+        I18N.createDefaultMessages(this);
         if (this.isPrivateServer()) {
             initPrivateServer();
         } else {
@@ -57,7 +56,6 @@ public class PrivateServer extends JavaPlugin {
 
     void initProvider() {
         this.getLogger().log(Level.INFO, "Initialising PrivateServer Provider...");
-        I18N.createDefaultMessages(this);
         this.configuration = new Configuration(this);
         this.checkConfiguration();
         this.privateServerUtil = new PrivateServerUtil(this);
@@ -72,9 +70,7 @@ public class PrivateServer extends JavaPlugin {
         this.currentPrivateServiceUtil = new CurrentPrivateServiceUtil();
         this.currentPrivateServiceUtil.sendOwner();
 
-        PluginManager pluginManager = Bukkit.getPluginManager();
-
-        pluginManager.registerEvents(new PlayerQuitListener(this), this);
+        new PlayerQuitListener(this);
 
     }
 

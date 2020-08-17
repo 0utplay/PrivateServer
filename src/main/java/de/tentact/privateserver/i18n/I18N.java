@@ -1,4 +1,4 @@
-package de.tentact.privateserver.provider.i18n;
+package de.tentact.privateserver.i18n;
 /*  Created in the IntelliJ IDEA.
     Copyright(c) 2020
     Created by 0utplay | Aldin Sijamhodzic
@@ -27,6 +27,8 @@ public class I18N {
 
     public static Translation STARTING_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-starting");
 
+    public static Translation TELEPORT_AFTER_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-teleport-after-start");
+
     public static Translation STARTING_PSERVER_ERROR = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-starting-error");
 
     public static Translation TEMPLATE_NOT_FOUND = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-template-not-found");
@@ -43,6 +45,8 @@ public class I18N {
 
     public static Translation PLAYER_NO_TEMPLATE_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-template-start-perms");
 
+    public static Translation OWNER_REQUESTED_STOP_KICK_ALL = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-requested-stop-kick-all");
+
     public static void createDefaultMessages(PrivateServer privateServer) {
         privateServer.logInfo("Creating default translations");
         PREFIX.createDefaults("&ePServer x &7");
@@ -52,6 +56,7 @@ public class I18N {
         WRONG_TEMPLATE_FORMAT.createDefaults("Templates sollten folgender Maßsen aussehen: Prefix/Name");
         NO_BASECOMMAND_ON_PSERVER.createDefaults("Du kannst diesen Command nicht auf einem privaten Server nutzen.");
         STARTING_PSERVER.createDefaults("Es wird ein privater Server mit dem Template %TEMPLATE_PREFIX% gestartet.", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
+        TELEPORT_AFTER_START.createDefaults("Sobald der Server hochgefahren ist, wirst du teleportiert.");
         STARTING_PSERVER_ERROR.createDefaults("Beim Starten des Servers ist ein Fehler aufgetreten.");
         TEMPLATE_NOT_FOUND.createDefaults("Das Template %TEMPLATE% konnte nicht gefunden werden.", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
         NO_TEMPLATE_START_PERMISSION.createDefaults("Du hast keine Rechte um das Template %TEMPLATE% zu starten.", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
@@ -60,6 +65,7 @@ public class I18N {
         PLAYER_ALREADY_HAS_PSERVER.createDefaults("Du kannst nur einen PServer haben");
         PLAYER_NO_NPC_OPEN_PERMS.createDefaults("Du hast keine Rechte um diesen NPC zu öffnen. Kaufe dir Premium auf Server.de");
         PLAYER_NO_TEMPLATE_START.createDefaults("Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ","%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
+        OWNER_REQUESTED_STOP_KICK_ALL.createDefaults("%OWNER% hat seinen Server gestoppt.");
     }
 
 

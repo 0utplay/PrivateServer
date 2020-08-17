@@ -8,7 +8,7 @@ package de.tentact.privateserver.service.listener;
 
 import de.tentact.languageapi.LanguageAPI;
 import de.tentact.privateserver.PrivateServer;
-import de.tentact.privateserver.provider.i18n.I18N;
+import de.tentact.privateserver.i18n.I18N;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,6 +25,7 @@ public class PlayerQuitListener implements Listener {
     public PlayerQuitListener(PrivateServer privateServer) {
         this.privateServer = privateServer;
         this.currentPrivateServiceUtil = privateServer.getCurrentPrivateServiceUtil();
+        Bukkit.getPluginManager().registerEvents(this, privateServer);
     }
 
     @EventHandler

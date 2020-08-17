@@ -11,9 +11,9 @@ import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.player.LanguagePlayer;
 import de.tentact.languageapi.player.PlayerExecutor;
 import de.tentact.privateserver.PrivateServer;
+import de.tentact.privateserver.i18n.I18N;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
-import de.tentact.privateserver.provider.i18n.I18N;
 import de.tentact.privateserver.provider.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -57,8 +57,8 @@ public class PlayerNPCInteract implements Listener {
             serverItemInventory.setItem(serverItemProperty.getInventorySlot(), itemBuilder.build());
         });
         this.privateServer.getPrivateServerUtil().getServiceInfoSnapshot(player.getUniqueId()).ifPresent(serviceInfoSnapshot -> {
-            String template = this.privateServer.getPrivateServerUtil().getProperty(serviceInfoSnapshot, "templatePrefix", String.class)
-                    + "/" + this.privateServer.getPrivateServerUtil().getProperty(serviceInfoSnapshot, "templateName", String.class);
+            String template = this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templatePrefix")
+                    + "/" + this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templateName");
             if(this.serverConfig.getCurrentServerItem() != null) {
                 serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem(), template).build());
             }

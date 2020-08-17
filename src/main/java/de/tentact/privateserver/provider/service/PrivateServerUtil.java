@@ -16,9 +16,10 @@ import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.player.LanguagePlayer;
 import de.tentact.privateserver.PrivateServer;
+import de.tentact.privateserver.i18n.I18N;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
-import de.tentact.privateserver.provider.i18n.I18N;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -120,6 +121,7 @@ public class PrivateServerUtil {
                     .replace("%TEMPLATE%", template)
                     .replace("%TEMPLATE_NAME%", templateName)
                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
+            Bukkit.getScheduler().runTaskLater(this.privateServer, () -> languagePlayer.sendMessage(I18N.TELEPORT_AFTER_START), 20*2);
             return;
         }
         languagePlayer.sendMessage(I18N.STARTING_PSERVER_ERROR);
@@ -153,6 +155,10 @@ public class PrivateServerUtil {
 
     public <T> T getProperty(ServiceInfoSnapshot serviceInfoSnapshot, String name, Class<T> clazz) {
         return serviceInfoSnapshot.getProperties().get(name, clazz);
+    }
+
+    public String getPropertyAsString(ServiceInfoSnapshot serviceInfoSnapshot, String property) {
+        return this.getProperty(serviceInfoSnapshot, property, String.class);
     }
 
 }
