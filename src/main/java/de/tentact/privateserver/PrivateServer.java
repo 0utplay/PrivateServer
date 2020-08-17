@@ -19,6 +19,7 @@ import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.listener.PlayerNPCInteract;
 import de.tentact.privateserver.provider.service.PrivateServerUtil;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
+import de.tentact.privateserver.service.listener.PlayerCommandPreprocessListener;
 import de.tentact.privateserver.service.listener.PlayerQuitListener;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -71,6 +72,7 @@ public class PrivateServer extends JavaPlugin {
         this.currentPrivateServiceUtil.sendOwner();
 
         new PlayerQuitListener(this);
+        new PlayerCommandPreprocessListener(this);
 
     }
 

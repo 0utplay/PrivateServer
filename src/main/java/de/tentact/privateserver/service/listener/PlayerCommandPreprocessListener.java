@@ -11,6 +11,7 @@ import de.tentact.privateserver.PrivateServer;
 import de.tentact.privateserver.i18n.I18N;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
@@ -24,6 +25,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, privateServer);
     }
 
+    @EventHandler
     public void handlePlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         if(event.getMessage().startsWith("/stop")) {
