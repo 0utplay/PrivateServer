@@ -70,6 +70,10 @@ public class Configuration {
         return document.get("config", PrivateServerConfig.class);
     }
 
+    /**
+     * Rewrites the current {@link Configuration}
+     * @param privateServerConfig the config to set
+     */
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
         document = new DefaultDocument("config", privateServerConfig);
         document.json().write(configFile);

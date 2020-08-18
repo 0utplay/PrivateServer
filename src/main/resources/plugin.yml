@@ -6,4 +6,4 @@ api-version: 1.13
 depend: [LanguageAPI, CloudNet-Bridge, ProtocolLib]
 commands:
   privateserver:
-    aliases: [pserver, ps]
+    aliases: [pserver, ps, os, cs]

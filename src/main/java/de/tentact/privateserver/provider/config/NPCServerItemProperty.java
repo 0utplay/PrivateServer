@@ -22,6 +22,19 @@ public class NPCServerItemProperty {
     private final boolean autoStopOnOwnerLeave;
     private final boolean autoStopIfEmpty;
 
+    /**
+     * ServerItemProperty that is displayed in the npc's inventory
+     * @param displayName the name of the startItem
+     * @param materialName the material of the startItem
+     * @param templateToStart the template of the startItem
+     * @param startPermission the needed permission to start this template
+     * @param subId the subID for legacy ItemStacks
+     * @param lore the lore of the startItem
+     * @param inventorySlot the inventorySlot the startItem is placed at
+     * @param showIfNoPerms whether the item is shown if the player can not start it
+     * @param autoStopOnOwnerLeave whether the server should stop if the owner leaves
+     * @param autoStopIfEmpty whether the server should stop if it is empty
+     */
     public NPCServerItemProperty(String displayName, String materialName, String templateToStart, String startPermission, byte subId, List<String> lore, int inventorySlot, boolean showIfNoPerms, boolean autoStopOnOwnerLeave, boolean autoStopIfEmpty) {
         this.displayName = displayName;
         this.materialName = materialName;

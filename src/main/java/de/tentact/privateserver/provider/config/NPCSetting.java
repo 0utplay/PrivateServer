@@ -12,6 +12,12 @@ public class NPCSetting {
     private final boolean shouldLookAtPlayer;
     private NPCLocation npcLocation;
 
+    /**
+     * Settings of the spawned NPC
+     * @param shouldImitatePlayer if the npc shouldImitatePlayer
+     * @param shouldLookAtPlayer if the npc shouldLookAtPlayer
+     * @param npcLocation the npcLocation to spawn the NPC at
+     */
     public NPCSetting(boolean shouldImitatePlayer, boolean shouldLookAtPlayer, NPCLocation npcLocation) {
         this.shouldImitatePlayer = shouldImitatePlayer;
         this.shouldLookAtPlayer = shouldLookAtPlayer;

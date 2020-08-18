@@ -57,7 +57,7 @@ public class PrivateServerCommand implements CommandExecutor {
             case "create":
                 this.privateServer.getPrivateServerUtil().createPrivateServer(player, args[1]);
                 break;
-            case "npc": //pserver npc delete || //pserver npc create imitadeplayer lookatPlayer
+            case "npc": // pserver npc delete || pserver npc create imitadeplayer lookatPlayer
                 if (args[1].equalsIgnoreCase("delete")) {
                     this.privateServer.removeNPC();
                     NPCSetting currentNPCSetting = this.privateServerConfig.getNPCSettings();

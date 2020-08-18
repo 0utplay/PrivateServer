@@ -39,9 +39,12 @@ public class PrivateServer extends JavaPlugin {
 
     public void onEnable() {
         I18N.createDefaultMessages(this);
+        //Check if this plugin runs on a PrivateServer
         if (this.isPrivateServer()) {
+            //Init this plugin as a PrivateServer
             initPrivateServer();
         } else {
+            //Init this plugin as PrivateServer provider
             initProvider();
         }
         Objects.requireNonNull(this.getCommand("privateserver")).setExecutor(new PrivateServerCommand(this));
@@ -76,7 +79,7 @@ public class PrivateServer extends JavaPlugin {
 
     }
 
-    public boolean isPrivateServer() {
+    private boolean isPrivateServer() {
         return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getProperties().contains("serverowner");
     }
 
@@ -84,6 +87,7 @@ public class PrivateServer extends JavaPlugin {
         return this.currentPrivateServiceUtil;
     }
 
+    //Spawn a NPC at the location given in the Configuration
     public void spawnNPC() {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
@@ -95,7 +99,7 @@ public class PrivateServer extends JavaPlugin {
                     .build(npcPool).getEntityId();
         }
     }
-
+    //Remove a spawned NPC
     public void removeNPC() {
         this.npcPool.removeNPC(this.npcId);
     }
@@ -110,11 +114,13 @@ public class PrivateServer extends JavaPlugin {
         if (serverConfig.getNPCInventory().getSize() < serverConfig.getStartItems().size()) {
             throw new UnsupportedOperationException("Inventory size is smaller than the amount of startItems");
         }
+        StringBuilder failedMaterials = new StringBuilder();
         for (NPCServerItemProperty itemProperty : serverConfig.getStartItems()) {
             if (Material.getMaterial(itemProperty.getMaterialName()) == null) {
-                throw new UnsupportedOperationException("Material: " + itemProperty.getMaterialName() + " was not found. Please check your config.json");
+                failedMaterials.append(itemProperty.getMaterialName()).append(" ");
             }
         }
+        this.logInfo("This materials does not exist: "+failedMaterials +" Please check your config.json and update the materials. Use the right ones for your server version.");
     }
 
     public void logInfo(String message) {

@@ -50,7 +50,5 @@ public class PlayerQuitListener implements Listener {
             return;
         }
         Bukkit.getScheduler().runTaskLater(privateServer, Bukkit::shutdown, 20 * 2L);
-
-
     }
 }

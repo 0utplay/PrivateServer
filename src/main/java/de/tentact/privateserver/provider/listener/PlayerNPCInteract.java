@@ -24,7 +24,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class PlayerNPCInteract implements Listener {
@@ -50,16 +50,16 @@ public class PlayerNPCInteract implements Listener {
             languagePlayer.sendMessage(I18N.PLAYER_NO_NPC_OPEN_PERMS);
             return;
         }
-        List<NPCServerItemProperty> serverItemProperties = this.getServerItemProperties(player);
         Inventory serverItemInventory = Bukkit.createInventory(null, this.serverConfig.getNPCInventory().getSize(), this.serverConfig.getNPCInventory().getName());
-        serverItemProperties.forEach(serverItemProperty -> {
+        //TODO: Rework this (this leaves some places empty...)
+        this.getServerItemProperties(player).forEach(serverItemProperty -> {
             ItemBuilder itemBuilder = new ItemBuilder(serverItemProperty);
             serverItemInventory.setItem(serverItemProperty.getInventorySlot(), itemBuilder.build());
         });
         this.privateServer.getPrivateServerUtil().getServiceInfoSnapshot(player.getUniqueId()).ifPresent(serviceInfoSnapshot -> {
             String template = this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templatePrefix")
                     + "/" + this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templateName");
-            if(this.serverConfig.getCurrentServerItem() != null) {
+            if (this.serverConfig.getCurrentServerItem() != null) {
                 serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem(), template).build());
             }
         });
@@ -118,7 +118,7 @@ public class PlayerNPCInteract implements Listener {
         }
     }
 
-    public List<NPCServerItemProperty> getServerItemProperties(Player player) {
+    public Collection<NPCServerItemProperty> getServerItemProperties(Player player) {
         return this.serverConfig.getStartItems()
                 .stream()
                 .filter(npcServerItemProperty ->

@@ -38,6 +38,13 @@ public class PrivateServerUtil {
         this.iPlayerManager = this.cloudNetDriver.getServicesRegistry().getFirstService(IPlayerManager.class);
     }
 
+    /**
+     * Creates a new PrivateServer based on the given arguments
+     * @param serverOwner the servers owner
+     * @param serviceTemplate the template to start the server with
+     * @param serverItemProperty a {@link NPCServerItemProperty} to get settings from
+     * @return if the service is created and started or not
+     */
     public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate, NPCServerItemProperty serverItemProperty) {
         if (this.privateServer.getConfiguration().getPrivateServerConfig().getPrivateServerTask() == null) {
             return false;
@@ -66,6 +73,11 @@ public class PrivateServerUtil {
         return true;
     }
 
+    /**
+     * This effectively runs startPrivateServer, but does some more checks and responses to the player
+     * @param player the player to create a server for
+     * @param template the template to create a server with
+     */
     public void createPrivateServer(Player player, String template) {
         LanguagePlayer languagePlayer = LanguageAPI.getInstance().getPlayerExecutor().getLanguagePlayer(player.getUniqueId());
         if (languagePlayer == null) {
@@ -127,6 +139,10 @@ public class PrivateServerUtil {
         languagePlayer.sendMessage(I18N.STARTING_PSERVER_ERROR);
     }
 
+    /**
+     * @param serverOwner the uuid to search for
+     * @return if the serverOwner has an PrivateServer
+     */
     public boolean hasPrivateServer(UUID serverOwner) {
         for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.privateServerConfig.getPrivateServerTaskName())) {
             if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
@@ -136,6 +152,10 @@ public class PrivateServerUtil {
         return false;
     }
 
+    /**
+     * Send an owner to his PrivateServer
+     * @param serverOwner the owner to send
+     */
     public void sendOwner(UUID serverOwner) {
         if (!this.hasPrivateServer(serverOwner)) {
             return;

@@ -17,6 +17,9 @@ public class CurrentPrivateServiceUtil {
 
     private final IPlayerManager iPlayerManager = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class);
 
+    /**
+     * Sends the owner to this server by fetching the attached properties
+     */
     public void sendOwner() {
         if (!this.isPrivateServer()) {
             return;
@@ -30,6 +33,10 @@ public class CurrentPrivateServiceUtil {
         this.iPlayerManager.getPlayerExecutor(cloudPlayer).connect(Wrapper.getInstance().getCurrentServiceInfoSnapshot().getName());
     }
 
+    /**
+     * Checks if the server the plugin runs on is a PrivateServer
+     * @return if the server is a PrivateServer
+     */
     public boolean isPrivateServer() {
         return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getProperties().contains("serverowner");
     }
