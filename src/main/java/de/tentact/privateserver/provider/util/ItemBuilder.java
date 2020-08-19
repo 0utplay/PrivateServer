@@ -7,6 +7,7 @@ package de.tentact.privateserver.provider.util;
 */
 
 import de.tentact.privateserver.provider.config.NPCCurrentServerItemProperty;
+import de.tentact.privateserver.provider.config.NPCInventoryLayout;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -64,6 +65,13 @@ public class ItemBuilder {
                         .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1]))
                 .setLore(lore)
                 .setSubId(serverItemProperty.getSubId());
+    }
+
+    public ItemBuilder(NPCInventoryLayout inventoryLayout) {
+        this(inventoryLayout.getMaterialName());
+        this.setDisplayName(inventoryLayout.getDisplayName());
+        this.setSubId(inventoryLayout.getSubId());
+        this.setLore(inventoryLayout.getLore());
     }
 
     public ItemBuilder setLore(List<String> lore) {

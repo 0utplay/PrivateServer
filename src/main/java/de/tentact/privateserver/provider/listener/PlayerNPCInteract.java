@@ -51,11 +51,18 @@ public class PlayerNPCInteract implements Listener {
             return;
         }
         Inventory serverItemInventory = Bukkit.createInventory(null, this.serverConfig.getNPCInventory().getSize(), this.serverConfig.getNPCInventory().getName());
+
+        ItemStack fillItem = new ItemBuilder(this.serverConfig.getInventoryFillItem()).build();
+        for (int i = 0; i < serverItemInventory.getSize(); i++) {
+            serverItemInventory.setItem(i, fillItem);
+        }
+
         //TODO: Rework this (this leaves some places empty...)
         this.getServerItemProperties(player).forEach(serverItemProperty -> {
             ItemBuilder itemBuilder = new ItemBuilder(serverItemProperty);
             serverItemInventory.setItem(serverItemProperty.getInventorySlot(), itemBuilder.build());
         });
+
         this.privateServer.getPrivateServerUtil().getServiceInfoSnapshot(player.getUniqueId()).ifPresent(serviceInfoSnapshot -> {
             String template = this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templatePrefix")
                     + "/" + this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templateName");

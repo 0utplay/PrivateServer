@@ -44,6 +44,12 @@ public class Configuration {
                         true,
                         null
                 ),
+                new NPCInventoryLayout(
+                        "BLACK_STAINED_GLASS",
+                        "",
+                        (byte) -1,
+                        Collections.singletonList("")
+                ),
                 new NPCCurrentServerItemProperty(
                         "Dein aktueller Server %displayname%",
                         "DIAMOND_BLOCK",
@@ -72,6 +78,7 @@ public class Configuration {
 
     /**
      * Rewrites the current {@link Configuration}
+     *
      * @param privateServerConfig the config to set
      */
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
