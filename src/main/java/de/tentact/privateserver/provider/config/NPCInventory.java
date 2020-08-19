@@ -13,11 +13,13 @@ public class NPCInventory {
     private final String name;
     private final String openPermission;
     private final int size;
+    private final NPCInventoryLayout inventoryFillItem;
 
-    public NPCInventory(String name, String openPermission, int size) {
+    public NPCInventory(String name, String openPermission, int size, NPCInventoryLayout inventoryFillItem) {
         this.name = name;
         this.openPermission = openPermission;
         this.size = size;
+        this.inventoryFillItem = inventoryFillItem;
     }
 
     public int getSize() {
@@ -30,5 +32,9 @@ public class NPCInventory {
 
     public String getOpenPermission() {
         return openPermission;
+    }
+
+    public NPCInventoryLayout getInventoryFillItem() {
+        return this.inventoryFillItem;
     }
 }

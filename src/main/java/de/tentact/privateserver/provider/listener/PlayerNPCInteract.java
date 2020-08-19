@@ -52,7 +52,7 @@ public class PlayerNPCInteract implements Listener {
         }
         Inventory serverItemInventory = Bukkit.createInventory(null, this.serverConfig.getNPCInventory().getSize(), this.serverConfig.getNPCInventory().getName());
 
-        ItemStack fillItem = new ItemBuilder(this.serverConfig.getInventoryFillItem()).build();
+        ItemStack fillItem = new ItemBuilder(this.serverConfig.getNPCInventory().getInventoryFillItem()).build();
         for (int i = 0; i < serverItemInventory.getSize(); i++) {
             serverItemInventory.setItem(i, fillItem);
         }

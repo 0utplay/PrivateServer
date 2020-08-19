@@ -37,19 +37,20 @@ public class Configuration {
                 new NPCInventory(
                         "&4PrivateServer",
                         "pserver.opennpc",
-                        9
+                        9,
+                        new NPCInventoryLayout(
+                                "BLACK_STAINED_GLASS",
+                                "",
+                                (byte) -1,
+                                Collections.singletonList("")
+                        )
                 ),
                 new NPCSetting(
                         true,
                         true,
                         null
                 ),
-                new NPCInventoryLayout(
-                        "BLACK_STAINED_GLASS",
-                        "",
-                        (byte) -1,
-                        Collections.singletonList("")
-                ),
+
                 new NPCCurrentServerItemProperty(
                         "Dein aktueller Server %displayname%",
                         "DIAMOND_BLOCK",
