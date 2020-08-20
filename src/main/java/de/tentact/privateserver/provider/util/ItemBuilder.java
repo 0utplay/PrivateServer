@@ -6,9 +6,8 @@ package de.tentact.privateserver.provider.util;
     Uhrzeit: 11:49
 */
 
-import de.tentact.privateserver.provider.config.NPCCurrentServerItemProperty;
 import de.tentact.privateserver.provider.config.NPCInventoryLayout;
-import de.tentact.privateserver.provider.config.NPCServerItemProperty;
+import de.tentact.privateserver.provider.config.ServerItemProperty;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,31 +37,26 @@ public class ItemBuilder {
     }
 
     public void setSubId(byte subId) {
-        if (subId == -1) {
+        if (subId <= 0) {
             return;
         }
         this.itemStack.setDurability(subId);
     }
 
-    public ItemBuilder(NPCServerItemProperty serverItemProperty) {
-        this(serverItemProperty.getMaterialName());
-        this
-                .setDisplayName(serverItemProperty.getDisplayName())
-                .setLore(serverItemProperty.getLore())
-                .setSubId(serverItemProperty.getSubId());
+    public ItemBuilder(ServerItemProperty serverItemProperty) {
+        this(serverItemProperty, "");
     }
 
-    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty, String startTemplate) {
+    public ItemBuilder(ServerItemProperty serverItemProperty, String startTemplate) {
         this(serverItemProperty.getMaterialName());
         List<String> lore = serverItemProperty.getLore();
         Collections.replaceAll(lore, "%TEMPLATE%", startTemplate);
         Collections.replaceAll(lore, "%TEMPLATE_PREFIX%", startTemplate.split("/")[0]);
         Collections.replaceAll(lore, "%TEMPLATE_NAME%", startTemplate.split("/")[1]);
 
-        this
-                .setDisplayName(serverItemProperty.getDisplayName().replace("%TEMPLATE%", startTemplate)
-                        .replace("%TEMPLATE_PREFIX%", startTemplate.split("/")[0])
-                        .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1]))
+        this.setDisplayName(serverItemProperty.getDisplayName().replace("%TEMPLATE%", startTemplate)
+                .replace("%TEMPLATE_PREFIX%", startTemplate.split("/")[0])
+                .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1]))
                 .setLore(lore)
                 .setSubId(serverItemProperty.getSubId());
     }

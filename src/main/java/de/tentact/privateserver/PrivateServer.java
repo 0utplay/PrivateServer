@@ -91,6 +91,7 @@ public class PrivateServer extends JavaPlugin {
     public void spawnNPC() {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
+            //TODO: Input Player name to get skin and set it
             Profile profile = new Profile(UUID.randomUUID(), "187Juliorn", null);
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
@@ -112,7 +113,7 @@ public class PrivateServer extends JavaPlugin {
         PrivateServerConfig serverConfig = this.configuration.getPrivateServerConfig();
 
         if (serverConfig.getNPCInventory().getSize() < serverConfig.getStartItems().size()) {
-            throw new UnsupportedOperationException("Inventory size is smaller than the amount of startItems");
+            this.logInfo("Inventory size is smaller than the amount of startItems... Please check your config.json");
         }
         StringBuilder failedMaterials = new StringBuilder();
         for (NPCServerItemProperty itemProperty : serverConfig.getStartItems()) {
@@ -120,7 +121,7 @@ public class PrivateServer extends JavaPlugin {
                 failedMaterials.append(itemProperty.getMaterialName()).append(" ");
             }
         }
-        this.logInfo("This materials does not exist: "+failedMaterials +" Please check your config.json and update the materials. Use the right ones for your server version.");
+        this.logInfo("This materials do not exist: "+failedMaterials +" Please check your config.json and update the materials. Use the right ones for your server version.");
     }
 
     public void logInfo(String message) {

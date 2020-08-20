@@ -9,7 +9,7 @@ package de.tentact.privateserver.provider.config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NPCCurrentServerItemProperty {
+public class NPCCurrentServerItemProperty implements ServerItemProperty {
 
     private final String displayName;
 
@@ -20,10 +20,11 @@ public class NPCCurrentServerItemProperty {
 
     /**
      * CurrentServerItemProperty that is displayed in the npc's inventory if the player currently has a PrivateServer
-     * @param displayName the name of the startItem
-     * @param materialName the material of the startItem
-     * @param subId the subID for legacy ItemStacks
-     * @param lore the lore of the startItem
+     *
+     * @param displayName   the name of the startItem
+     * @param materialName  the material of the startItem
+     * @param subId         the subID for legacy ItemStacks
+     * @param lore          the lore of the startItem
      * @param inventorySlot the inventorySlot the startItem is placed at
      */
     public NPCCurrentServerItemProperty(String displayName, String materialName, byte subId, List<String> lore, int inventorySlot) {

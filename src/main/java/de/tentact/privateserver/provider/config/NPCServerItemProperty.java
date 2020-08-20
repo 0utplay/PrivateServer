@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NPCServerItemProperty {
+public class NPCServerItemProperty implements ServerItemProperty {
 
     private final String displayName, materialName, templateToStart, startPermission;
     private final byte subId;
@@ -24,16 +24,17 @@ public class NPCServerItemProperty {
 
     /**
      * ServerItemProperty that is displayed in the npc's inventory
-     * @param displayName the name of the startItem
-     * @param materialName the material of the startItem
-     * @param templateToStart the template of the startItem
-     * @param startPermission the needed permission to start this template
-     * @param subId the subID for legacy ItemStacks
-     * @param lore the lore of the startItem
-     * @param inventorySlot the inventorySlot the startItem is placed at
-     * @param showIfNoPerms whether the item is shown if the player can not start it
+     *
+     * @param displayName          the name of the startItem
+     * @param materialName         the material of the startItem
+     * @param templateToStart      the template of the startItem
+     * @param startPermission      the needed permission to start this template
+     * @param subId                the subID for legacy ItemStacks
+     * @param lore                 the lore of the startItem
+     * @param inventorySlot        the inventorySlot the startItem is placed at
+     * @param showIfNoPerms        whether the item is shown if the player can not start it
      * @param autoStopOnOwnerLeave whether the server should stop if the owner leaves
-     * @param autoStopIfEmpty whether the server should stop if it is empty
+     * @param autoStopIfEmpty      whether the server should stop if it is empty
      */
     public NPCServerItemProperty(String displayName, String materialName, String templateToStart, String startPermission, byte subId, List<String> lore, int inventorySlot, boolean showIfNoPerms, boolean autoStopOnOwnerLeave, boolean autoStopIfEmpty) {
         this.displayName = displayName;
