@@ -64,7 +64,7 @@ public class I18N {
         OWNER_LEFT_KICK_MESSAGE.createDefaults("Der Server wird nun gestoppt.", "%OWNER%");
         PLAYER_ALREADY_HAS_PSERVER.createDefaults("Du kannst nur einen PServer haben");
         PLAYER_NO_NPC_OPEN_PERMS.createDefaults("Du hast keine Rechte um diesen NPC zu öffnen. Kaufe dir Premium auf Server.de");
-        PLAYER_NO_TEMPLATE_START.createDefaults("Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ","%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
+        PLAYER_NO_TEMPLATE_START.createDefaults("Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
         OWNER_REQUESTED_STOP_KICK_ALL.createDefaults("%OWNER% hat seinen Server gestoppt.");
     }
 
