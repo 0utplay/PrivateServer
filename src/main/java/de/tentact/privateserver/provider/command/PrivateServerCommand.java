@@ -14,6 +14,8 @@ import de.tentact.privateserver.i18n.I18N;
 import de.tentact.privateserver.provider.config.NPCLocation;
 import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
+import de.tentact.privateserver.provider.util.SkinFetcher;
+import de.tentact.privateserver.provider.util.UUIDFetcher;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -64,7 +66,7 @@ public class PrivateServerCommand implements CommandExecutor {
                     this.privateServerConfig.setNPCSettings(currentNPCSetting.setNPCLocation(null));
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                 } else if (args[1].equalsIgnoreCase("create")) {
-                    if (args.length < 4) {
+                    if (args.length < 5) {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP);
                         return false;
                     }
@@ -77,7 +79,8 @@ public class PrivateServerCommand implements CommandExecutor {
                     }
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
-                    NPCSetting setting = new NPCSetting(imitatePlayer, lookAtPlayer, new NPCLocation(player.getLocation()));
+                    //TODO: FETCH SKINVALUES AND INSERT HERE
+                    NPCSetting setting = new NPCSetting(imitatePlayer, lookAtPlayer, SkinFetcher.fetch(UUIDFetcher.getUUID(args[4])), new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.spawnNPC();

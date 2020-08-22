@@ -24,6 +24,7 @@ import de.tentact.privateserver.service.listener.PlayerQuitListener;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -92,7 +93,9 @@ public class PrivateServer extends JavaPlugin {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             //TODO: Input Player name to get skin and set it
-            Profile profile = new Profile(UUID.randomUUID(), "187Juliorn", null);
+            Profile profile = new Profile(UUID.randomUUID(), "187Juliorn",
+                    Collections.singletonList(new Profile.Property("187Juliorn",
+                            this.getEmptyIfNull(settings.getSkinValue()), "")));
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())
@@ -100,6 +103,7 @@ public class PrivateServer extends JavaPlugin {
                     .build(npcPool).getEntityId();
         }
     }
+
     //Remove a spawned NPC
     public void removeNPC() {
         this.npcPool.removeNPC(this.npcId);
@@ -121,10 +125,14 @@ public class PrivateServer extends JavaPlugin {
                 failedMaterials.append(itemProperty.getMaterialName()).append(" ");
             }
         }
-        this.logInfo("This materials do not exist: "+failedMaterials +" Please check your config.json and update the materials. Use the right ones for your server version.");
+        this.logInfo("This materials do not exist: " + failedMaterials + " Please check your config.json and update the materials. Use the right ones for your server version.");
     }
 
     public void logInfo(String message) {
         this.getLogger().log(Level.INFO, message);
+    }
+
+    private String getEmptyIfNull(String string) {
+        return string == null ? "" : string;
     }
 }

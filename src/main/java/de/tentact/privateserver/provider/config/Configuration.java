@@ -48,6 +48,7 @@ public class Configuration {
                 new NPCSetting(
                         true,
                         true,
+                        null,
                         null
                 ),
 

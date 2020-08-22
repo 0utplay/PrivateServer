@@ -46,6 +46,8 @@ public class PrivateServerConfig {
         return CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask(this.privateServerTaskName);
     }
 
+
+
     public String getBaseCommandPermission() {
         return this.baseCommandPermission;
     }
