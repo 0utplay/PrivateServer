@@ -15,10 +15,11 @@ public class NPCSetting {
 
     /**
      * Settings of the spawned NPC
+     *
      * @param shouldImitatePlayer if the npc shouldImitatePlayer
-     * @param shouldLookAtPlayer if the npc shouldLookAtPlayer
-     * @param skinValue
-     * @param npcLocation the npcLocation to spawn the NPC at
+     * @param shouldLookAtPlayer  if the npc shouldLookAtPlayer
+     * @param skinValue the skin that should be applied to the NPC
+     * @param npcLocation         the npcLocation to spawn the NPC at
      */
     public NPCSetting(boolean shouldImitatePlayer, boolean shouldLookAtPlayer, String skinValue, NPCLocation npcLocation) {
         this.shouldImitatePlayer = shouldImitatePlayer;

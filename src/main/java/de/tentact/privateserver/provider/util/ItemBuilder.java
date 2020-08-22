@@ -6,8 +6,9 @@ package de.tentact.privateserver.provider.util;
     Uhrzeit: 11:49
 */
 
+import de.tentact.privateserver.provider.config.NPCCurrentServerItemProperty;
 import de.tentact.privateserver.provider.config.NPCInventoryLayout;
-import de.tentact.privateserver.provider.config.ServerItemProperty;
+import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -43,11 +44,15 @@ public class ItemBuilder {
         this.itemStack.setDurability(subId);
     }
 
-    public ItemBuilder(ServerItemProperty serverItemProperty) {
-        this(serverItemProperty, "");
+    public ItemBuilder(NPCServerItemProperty serverItemProperty) {
+        this(serverItemProperty.getMaterialName());
+        this
+                .setDisplayName(serverItemProperty.getDisplayName())
+                .setLore(serverItemProperty.getLore())
+                .setSubId(serverItemProperty.getSubId());
     }
 
-    public ItemBuilder(ServerItemProperty serverItemProperty, String startTemplate) {
+    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty, String startTemplate) {
         this(serverItemProperty.getMaterialName());
         List<String> lore = serverItemProperty.getLore();
         Collections.replaceAll(lore, "%TEMPLATE%", startTemplate);

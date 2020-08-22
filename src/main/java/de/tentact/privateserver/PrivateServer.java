@@ -93,7 +93,7 @@ public class PrivateServer extends JavaPlugin {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             //TODO: Input Player name to get skin and set it
-            Profile profile = new Profile(UUID.randomUUID(), "187Juliorn",
+            Profile profile = new Profile(UUID.randomUUID(), "0utplayyyy",
                     Collections.singletonList(new Profile.Property("187Juliorn",
                             this.getEmptyIfNull(settings.getSkinValue()), "")));
             npcId = new NPC.Builder(profile)

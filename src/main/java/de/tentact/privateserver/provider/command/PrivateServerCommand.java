@@ -79,8 +79,11 @@ public class PrivateServerCommand implements CommandExecutor {
                     }
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
-                    //TODO: FETCH SKINVALUES AND INSERT HERE
-                    NPCSetting setting = new NPCSetting(imitatePlayer, lookAtPlayer, SkinFetcher.fetch(UUIDFetcher.getUUID(args[4])), new NPCLocation(player.getLocation()));
+                    NPCSetting setting = new NPCSetting(
+                            imitatePlayer,
+                            lookAtPlayer,
+                            SkinFetcher.fetch(UUIDFetcher.getUUID(args[4])),
+                            new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.spawnNPC();

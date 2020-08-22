@@ -56,7 +56,7 @@ public class PrivateServerConfig {
         return this.npcSetting;
     }
 
-    public ServerItemProperty getCurrentServerItem() {
+    public NPCCurrentServerItemProperty getCurrentServerItem() {
         return this.currentServerItem;
     }
 
