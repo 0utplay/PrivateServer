@@ -125,7 +125,10 @@ public class PrivateServer extends JavaPlugin {
                 failedMaterials.append(itemProperty.getMaterialName()).append(" ");
             }
         }
-        this.logInfo("This materials do not exist: " + failedMaterials + " Please check your config.json and update the materials. Use the right ones for your server version.");
+        if(!failedMaterials.toString().isEmpty()) {
+            this.logInfo("This materials do not exist: " + failedMaterials.toString() + " Please check your config.json and update the materials. Use the right ones for your server version.");
+        }
+
     }
 
     public void logInfo(String message) {
