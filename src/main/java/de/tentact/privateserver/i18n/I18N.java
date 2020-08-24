@@ -67,6 +67,4 @@ public class I18N {
         PLAYER_NO_TEMPLATE_START.createDefaults("Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%");
         OWNER_REQUESTED_STOP_KICK_ALL.createDefaults("%OWNER% hat seinen Server gestoppt.");
     }
-
-
 }

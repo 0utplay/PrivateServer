@@ -15,7 +15,6 @@ import de.tentact.privateserver.provider.config.NPCLocation;
 import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.util.SkinFetcher;
-import de.tentact.privateserver.provider.util.UUIDFetcher;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -82,8 +81,8 @@ public class PrivateServerCommand implements CommandExecutor {
                     NPCSetting setting = new NPCSetting(
                             imitatePlayer,
                             lookAtPlayer,
-                            SkinFetcher.fetch(UUIDFetcher.getUUID(args[4])),
-                            new NPCLocation(player.getLocation()));
+                            SkinFetcher.fetchValue(args[4]),
+                            SkinFetcher.fetchSignature(args[4]), new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.spawnNPC();

@@ -8,6 +8,7 @@ package de.tentact.privateserver;
 
 import com.github.juliarn.npc.NPC;
 import com.github.juliarn.npc.NPCPool;
+import com.github.juliarn.npc.modifier.MetadataModifier;
 import com.github.juliarn.npc.profile.Profile;
 import de.dytanic.cloudnet.wrapper.Wrapper;
 import de.tentact.privateserver.i18n.I18N;
@@ -93,14 +94,18 @@ public class PrivateServer extends JavaPlugin {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             //TODO: Input Player name to get skin and set it
+            logInfo(settings.getSkinValue());
             Profile profile = new Profile(UUID.randomUUID(), "0utplayyyy",
-                    Collections.singletonList(new Profile.Property("187Juliorn",
-                            this.getEmptyIfNull(settings.getSkinValue()), "")));
+                    Collections.singletonList(new Profile.Property("0utplayyyy",
+                            settings.getSkinValue(), settings.getSkinSignature())));
+
+            //profile.complete();
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())
                     .location(settings.getNPCLocation().getLocation())
                     .build(npcPool).getEntityId();
+            this.npcPool.getNPC(this.npcId).metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
         }
     }
 
@@ -125,7 +130,7 @@ public class PrivateServer extends JavaPlugin {
                 failedMaterials.append(itemProperty.getMaterialName()).append(" ");
             }
         }
-        if(!failedMaterials.toString().isEmpty()) {
+        if (!failedMaterials.toString().isEmpty()) {
             this.logInfo("This materials do not exist: " + failedMaterials.toString() + " Please check your config.json and update the materials. Use the right ones for your server version.");
         }
 
@@ -133,9 +138,5 @@ public class PrivateServer extends JavaPlugin {
 
     public void logInfo(String message) {
         this.getLogger().log(Level.INFO, message);
-    }
-
-    private String getEmptyIfNull(String string) {
-        return string == null ? "" : string;
     }
 }

@@ -6,15 +6,11 @@ package de.tentact.privateserver.provider.util;
     Uhrzeit: 23:53
 */
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.github.derrop.documents.Document;
+import com.github.derrop.documents.Documents;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
 
@@ -22,19 +18,41 @@ public class SkinFetcher {
 
     private static final String SERVICE_URL = "https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false";
 
-    public static String fetch(UUID uuid) {
-        return (String) getProperties(uuid).get("value");
+    public static String fetchValue(UUID uuid) {
+        if(!getProperties(uuid).contains("value")) {
+            return "";
+        }
+        return getProperties(uuid).get("value", String.class);
     }
 
-    public static String fetch(String name) {
-        return fetch(UUIDFetcher.getUUID(name));
+    public static String fetchValue(String name) {
+        return fetchValue(UUIDFetcher.getUUID(name));
+    }
+
+    public static String fetchSignature(UUID uuid) {
+        if(!getProperties(uuid).contains("signature")) {
+            return "";
+        }
+        return getProperties(uuid).get("signature", String.class);
+    }
+
+    public static String fetchSignature(String name) {
+        return fetchSignature(UUIDFetcher.getUUID(name));
     }
 
     private static InputStream getSkinInputStream(UUID uuid) throws IOException {
         return new URL(String.format(SERVICE_URL, uuid)).openStream();
     }
 
-    private static JSONObject getProperties(UUID uuid) {
+    public static Document getProperties(UUID uuid) {
+        try {
+            Document document = Documents.jsonStorage().read(getSkinInputStream(uuid));
+            return Documents.newDocument(document.get("properties").getAsJsonArray().get(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Documents.newDocument();
+        /*
         JSONParser jsonParser = new JSONParser();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getSkinInputStream(uuid)))) {
             JSONObject jsonObject =(JSONObject) jsonParser.parse(bufferedReader);
@@ -43,8 +61,10 @@ public class SkinFetcher {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        return new JSONObject();
+        return new JSONObject();*/
     }
 
-
+    private static String getEmptyIfNull(String input) {
+        return input == null ? "" : input;
+    }
 }

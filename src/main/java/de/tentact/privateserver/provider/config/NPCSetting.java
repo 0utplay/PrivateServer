@@ -11,6 +11,7 @@ public class NPCSetting {
     private final boolean shouldImitatePlayer;
     private final boolean shouldLookAtPlayer;
     private final String skinValue;
+    private final String skinSignature;
     private NPCLocation npcLocation;
 
     /**
@@ -18,13 +19,15 @@ public class NPCSetting {
      *
      * @param shouldImitatePlayer if the npc shouldImitatePlayer
      * @param shouldLookAtPlayer  if the npc shouldLookAtPlayer
-     * @param skinValue the skin that should be applied to the NPC
+     * @param skinValue           the skin that should be applied to the NPC
+     * @param skinSignature       the signature of the skin that should be applied to the NPC
      * @param npcLocation         the npcLocation to spawn the NPC at
      */
-    public NPCSetting(boolean shouldImitatePlayer, boolean shouldLookAtPlayer, String skinValue, NPCLocation npcLocation) {
+    public NPCSetting(boolean shouldImitatePlayer, boolean shouldLookAtPlayer, String skinValue, String skinSignature, NPCLocation npcLocation) {
         this.shouldImitatePlayer = shouldImitatePlayer;
         this.shouldLookAtPlayer = shouldLookAtPlayer;
         this.skinValue = skinValue;
+        this.skinSignature = skinSignature;
         this.npcLocation = npcLocation;
     }
 
@@ -47,5 +50,9 @@ public class NPCSetting {
     public NPCSetting setNPCLocation(NPCLocation npcLocation) {
         this.npcLocation = npcLocation;
         return this;
+    }
+
+    public String getSkinSignature() {
+        return this.skinSignature;
     }
 }
