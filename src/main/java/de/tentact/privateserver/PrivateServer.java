@@ -11,7 +11,6 @@ import com.github.juliarn.npc.NPCPool;
 import com.github.juliarn.npc.modifier.MetadataModifier;
 import com.github.juliarn.npc.profile.Profile;
 import de.dytanic.cloudnet.wrapper.Wrapper;
-import de.tentact.privateserver.i18n.I18N;
 import de.tentact.privateserver.provider.command.PrivateServerCommand;
 import de.tentact.privateserver.provider.config.Configuration;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
@@ -40,7 +39,6 @@ public class PrivateServer extends JavaPlugin {
     private int npcId;
 
     public void onEnable() {
-        I18N.createDefaultMessages(this);
         //Check if this plugin runs on a PrivateServer
         if (this.isPrivateServer()) {
             //Init this plugin as a PrivateServer

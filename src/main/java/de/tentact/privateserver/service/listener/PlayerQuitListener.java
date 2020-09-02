@@ -35,13 +35,13 @@ public class PlayerQuitListener implements Listener {
             return;
         }
         if (this.currentPrivateServiceUtil.isAutoStopOnOwnerLeave() && player.getUniqueId().equals(this.currentPrivateServiceUtil.getOwner())) {
-            languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.replace("%OWNER%", player.getName()));
+            languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.get().replace("%OWNER%", player.getName()));
 
             Bukkit.getScheduler().runTaskLater(privateServer, () -> {
                 if(Bukkit.getPlayer(this.currentPrivateServiceUtil.getOwner()) != null) {
                     return;
                 }
-                languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.replace("%OWNER%", player.getName()));
+                languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.get().replace("%OWNER%", player.getName()));
                 Bukkit.shutdown();
             }, 20 * 15L);
             return;

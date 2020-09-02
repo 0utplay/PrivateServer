@@ -84,12 +84,12 @@ public class PrivateServerUtil {
             return;
         }
         if (this.hasPrivateServer(player.getUniqueId())) {
-            languagePlayer.sendMessage(I18N.PLAYER_ALREADY_HAS_PSERVER);
+            languagePlayer.sendMessage(I18N.PLAYER_ALREADY_HAS_PSERVER.get());
             return;
         }
 
         if (!template.matches("([A-Za-z0-9]+\\/[A-Za-z0-9]+)")) {
-            languagePlayer.sendMessage(I18N.WRONG_TEMPLATE_FORMAT);
+            languagePlayer.sendMessage(I18N.WRONG_TEMPLATE_FORMAT.get());
             return;
         }
 
@@ -100,7 +100,7 @@ public class PrivateServerUtil {
                 .filter(npcServerItemProperty -> npcServerItemProperty.getTemplateToStart().equalsIgnoreCase(template)).findFirst().orElse(null);
 
         if (serverItem == null) {
-            languagePlayer.sendMessage(I18N.TEMPLATE_NOT_FOUND
+            languagePlayer.sendMessage(I18N.TEMPLATE_NOT_FOUND.get()
                     .replace("%TEMPLATE%", template)
                     .replace("%TEMPLATE_NAME%", templateName)
                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
@@ -108,7 +108,7 @@ public class PrivateServerUtil {
         }
 
         if (!player.hasPermission(serverItem.getStartPermission())) {
-            languagePlayer.sendMessage(I18N.NO_TEMPLATE_START_PERMISSION
+            languagePlayer.sendMessage(I18N.NO_TEMPLATE_START_PERMISSION.get()
                     .replace("%TEMPLATE%", template)
                     .replace("%TEMPLATE_NAME%", templateName)
                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
@@ -120,7 +120,7 @@ public class PrivateServerUtil {
                 .filter(sTemplate -> sTemplate.getPrefix().equalsIgnoreCase(templatePrefix) && sTemplate.getName().equalsIgnoreCase(templateName)).findFirst().orElse(null);
 
         if (serviceTemplate == null) {
-            languagePlayer.sendMessage(I18N.TEMPLATE_NOT_FOUND
+            languagePlayer.sendMessage(I18N.TEMPLATE_NOT_FOUND.get()
                     .replace("%TEMPLATE%", template)
                     .replace("%TEMPLATE_NAME%", templateName)
                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
@@ -129,14 +129,14 @@ public class PrivateServerUtil {
 
         boolean started = this.privateServer.getPrivateServerUtil().startPrivateServer(languagePlayer.getUniqueId(), serviceTemplate, serverItem);
         if (started) {
-            languagePlayer.sendMessage(I18N.STARTING_PSERVER
+            languagePlayer.sendMessage(I18N.STARTING_PSERVER.get()
                     .replace("%TEMPLATE%", template)
                     .replace("%TEMPLATE_NAME%", templateName)
                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
-            Bukkit.getScheduler().runTaskLater(this.privateServer, () -> languagePlayer.sendMessage(I18N.TELEPORT_AFTER_START), 20*2);
+            Bukkit.getScheduler().runTaskLater(this.privateServer, () -> languagePlayer.sendMessage(I18N.TELEPORT_AFTER_START.get()), 20*2);
             return;
         }
-        languagePlayer.sendMessage(I18N.STARTING_PSERVER_ERROR);
+        languagePlayer.sendMessage(I18N.STARTING_PSERVER_ERROR.get());
     }
 
     /**

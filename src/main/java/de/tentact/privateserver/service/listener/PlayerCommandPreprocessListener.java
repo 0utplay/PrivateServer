@@ -35,7 +35,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             if(!this.privateServer.getCurrentPrivateServiceUtil().getOwner().equals(player.getUniqueId())) {
                 return;
             }
-            this.languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_REQUESTED_STOP_KICK_ALL.replace("%OWNER%", player.getDisplayName()));
+            this.languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_REQUESTED_STOP_KICK_ALL.get().replace("%OWNER%", player.getDisplayName()));
         }
     }
 

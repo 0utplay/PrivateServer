@@ -47,7 +47,7 @@ public class PlayerNPCInteract implements Listener {
             return;
         }
         if (!player.hasPermission(this.serverConfig.getNPCInventory().getOpenPermission())) {
-            languagePlayer.sendMessage(I18N.PLAYER_NO_NPC_OPEN_PERMS);
+            languagePlayer.sendMessage(I18N.PLAYER_NO_NPC_OPEN_PERMS.get());
             return;
         }
         Inventory serverItemInventory = Bukkit.createInventory(null, this.serverConfig.getNPCInventory().getSize(), this.serverConfig.getNPCInventory().getName());
@@ -104,7 +104,7 @@ public class PlayerNPCInteract implements Listener {
                         String templatePrefix = template.split("/")[0];
                         String templateName = template.split("/")[1];
                         if (!player.hasPermission(serverItemProperty.getStartPermission())) {
-                            languagePlayer.sendMessage(I18N.PLAYER_NO_TEMPLATE_START
+                            languagePlayer.sendMessage(I18N.PLAYER_NO_TEMPLATE_START.get()
                                     .replace("%TEMPLATE%", serverItemProperty.getTemplateToStart())
                                     .replace("%TEMPLATE_NAME%", templateName)
                                     .replace("%TEMPLATE_PREFIX%", templatePrefix));
