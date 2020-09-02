@@ -15,37 +15,37 @@ public class I18N {
 
     private static final LanguageAPI languageAPI = LanguageAPI.getInstance();
 
-    public static Translation PREFIX = languageAPI.getTranslation("pserver-prefix");
+    public static final Translation PREFIX = languageAPI.getTranslation("pserver-prefix");
 
-    public static Translation NO_BASECOMMAND_PERMISSION = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-basecommand-no-permission");
+    public static final Translation NO_BASECOMMAND_PERMISSION = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-basecommand-no-permission");
 
-    public static Translation COMMAND_HELP = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-basecommand-help");
+    public static final Translation COMMAND_HELP = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-basecommand-help");
 
-    public static Translation WRONG_TEMPLATE_FORMAT = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-wrong-template-format");
+    public static final Translation WRONG_TEMPLATE_FORMAT = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-wrong-template-format");
 
-    public static Translation NO_BASECOMMAND_ON_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-basecommand-on-pserver");
+    public static final Translation NO_BASECOMMAND_ON_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-basecommand-on-pserver");
 
-    public static Translation STARTING_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-starting");
+    public static final Translation STARTING_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-starting");
 
-    public static Translation TELEPORT_AFTER_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-teleport-after-start");
+    public static final Translation TELEPORT_AFTER_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-teleport-after-start");
 
-    public static Translation STARTING_PSERVER_ERROR = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-starting-error");
+    public static final Translation STARTING_PSERVER_ERROR = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-starting-error");
 
-    public static Translation TEMPLATE_NOT_FOUND = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-template-not-found");
+    public static final Translation TEMPLATE_NOT_FOUND = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-template-not-found");
 
-    public static Translation NO_TEMPLATE_START_PERMISSION = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-no-template-start-permission");
+    public static final Translation NO_TEMPLATE_START_PERMISSION = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-no-template-start-permission");
 
-    public static Translation OWNER_LEFT_STOPPING_SERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-left-stopping-server");
+    public static final Translation OWNER_LEFT_STOPPING_SERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-left-stopping-server");
 
-    public static Translation OWNER_LEFT_KICK_MESSAGE = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-left-kick-message");
+    public static final Translation OWNER_LEFT_KICK_MESSAGE = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-left-kick-message");
 
-    public static Translation PLAYER_ALREADY_HAS_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-already-has-pserver");
+    public static final Translation PLAYER_ALREADY_HAS_PSERVER = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-already-has-pserver");
 
-    public static Translation PLAYER_NO_NPC_OPEN_PERMS = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-npc-open-perms");
+    public static final Translation PLAYER_NO_NPC_OPEN_PERMS = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-npc-open-perms");
 
-    public static Translation PLAYER_NO_TEMPLATE_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-template-start-perms");
+    public static final Translation PLAYER_NO_TEMPLATE_START = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-player-no-template-start-perms");
 
-    public static Translation OWNER_REQUESTED_STOP_KICK_ALL = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-requested-stop-kick-all");
+    public static final Translation OWNER_REQUESTED_STOP_KICK_ALL = languageAPI.getTranslationWithPrefix(PREFIX, "pserver-owner-requested-stop-kick-all");
 
     public static void createDefaultMessages(PrivateServer privateServer) {
         privateServer.logInfo("Creating default translations");
