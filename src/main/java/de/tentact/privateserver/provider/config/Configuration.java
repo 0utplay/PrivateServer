@@ -30,7 +30,15 @@ public class Configuration {
         configFile.getParentFile().mkdirs();
         privateServer.logInfo("No config.json found...");
         privateServer.logInfo("Creating new config.json");
-        document.append("config", new PrivateServerConfig(
+        document.append("config", this.getDefaultServerConfig()).json().write(configFile);
+    }
+
+    public PrivateServerConfig getPrivateServerConfig() {
+        return document.get("config", PrivateServerConfig.class);
+    }
+
+    private PrivateServerConfig getDefaultServerConfig() {
+        return new PrivateServerConfig(
                 "PServer",
                 "pserver.basecommand",
                 "&4PrivateServer",
@@ -71,12 +79,7 @@ public class Configuration {
                                 true,
                                 true,
                                 false)
-                )
-        )).json().write(configFile);
-    }
-
-    public PrivateServerConfig getPrivateServerConfig() {
-        return document.get("config", PrivateServerConfig.class);
+                ));
     }
 
     /**

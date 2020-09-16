@@ -79,11 +79,17 @@ public class PrivateServerCommand implements CommandExecutor {
                     }
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
+                    String skinValue = SkinFetcher.fetchValue(args[4]);
+                    String skinSignature = SkinFetcher.fetchSignature(args[4]);
+                    if(skinValue.isEmpty() || skinSignature.isEmpty()) {
+                        languagePlayer.sendMessage(I18N.SKIN_FETCH_FAIL.get().replace("%PLAYER%", args[4]));
+                    }
                     NPCSetting setting = new NPCSetting(
                             imitatePlayer,
                             lookAtPlayer,
-                            SkinFetcher.fetchValue(args[4]),
-                            SkinFetcher.fetchSignature(args[4]), new NPCLocation(player.getLocation()));
+                            skinValue,
+                            skinSignature,
+                            new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.spawnNPC();
