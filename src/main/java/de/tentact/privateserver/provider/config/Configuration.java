@@ -12,33 +12,42 @@ import com.github.derrop.documents.Documents;
 import de.tentact.privateserver.PrivateServer;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.logging.Level;
 
 public class Configuration {
 
     private Document document = new DefaultDocument();
 
-    private final File configFile = new File("plugins/PrivateServer", "config.json");
+    private final File configFile;
 
     public Configuration(PrivateServer privateServer) {
-        if (configFile.exists()) {
+        this.configFile = new File(privateServer.getDataFolder(), "config.json");
+        if (this.configFile.exists()) {
             privateServer.logInfo("Found config.json. Reading config.json...");
-            document = Documents.jsonStorage().read(configFile);
-            if(!document.contains("config")) {
+            this.document = Documents.jsonStorage().read(configFile);
+            if (!this.document.contains("config")) {
                 privateServer.logInfo("Config.json has no entry... Resetting to default...");
                 this.writeDefaultConfiguration();
             }
             return;
         }
-        configFile.getParentFile().mkdirs();
+        try {
+            Files.createDirectories(privateServer.getDataFolder().toPath());
+        } catch (IOException e) {
+            privateServer.getLogger().log(Level.WARNING, "While creating directories used by the plugin an exception occurred:");
+            e.printStackTrace();
+        }
         privateServer.logInfo("No config.json found...");
         privateServer.logInfo("Creating new config.json");
         this.writeDefaultConfiguration();
     }
 
     public PrivateServerConfig getPrivateServerConfig() {
-        return document.get("config", PrivateServerConfig.class);
+        return this.document.get("config", PrivateServerConfig.class);
     }
 
     private PrivateServerConfig getDefaultServerConfig() {
@@ -88,11 +97,12 @@ public class Configuration {
 
     /**
      * Rewrites the current {@link Configuration}
+     *
      * @param privateServerConfig the config to set
      */
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
-        document = new DefaultDocument("config", privateServerConfig);
-        document.json().write(configFile);
+        this.document = new DefaultDocument("config", privateServerConfig);
+        this.document.json().write(configFile);
     }
 
     private void writeDefaultConfiguration() {

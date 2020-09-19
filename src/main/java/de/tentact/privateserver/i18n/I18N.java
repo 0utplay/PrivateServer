@@ -15,7 +15,8 @@ public enum I18N {
     PREFIX("pserver-prefix", "&ePServer x &7"),
     NO_BASECOMMAND_PERMISSION("pserver-basecommand-no-permission", "Dazu hast du keine Rechte"),
     COMMAND_HELP("pserver-basecommand-help", "Nutze /pserver create <Prefix/Name>\n" +
-            "Nutze /pserver npc <create | delete>"),
+            "Nutze /pserver npc create <shouldImitadePlayer> <shouldLookAtPlayer> <NPCName>\n"+
+            "Nutze /pserver npc delete"),
     SKIN_FETCH_FAIL("pserver-command-skin-fetch-fail", "Der Skin von %PLAYER% konnte nicht geladen werden.", "%PLAYER%"),
     WRONG_TEMPLATE_FORMAT("pserver-wrong-template-format", "Templates sollten folgender Maßsen aussehen: Prefix/Name"),
     NO_BASECOMMAND_ON_PSERVER("pserver-basecommand-on-pserver", "Du kannst diesen Command nicht auf einem privaten Server nutzen."),

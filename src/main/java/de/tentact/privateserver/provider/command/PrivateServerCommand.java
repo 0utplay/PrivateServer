@@ -70,7 +70,7 @@ public class PrivateServerCommand implements CommandExecutor {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP.get());
                         return false;
                     }
-                    if (!this.isBoolean(args[2]) || !this.isBoolean(args[3])) {
+                    if (this.isNoBoolean(args[2]) || this.isNoBoolean(args[3])) {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP.get());
                         return false;
                     }
@@ -107,8 +107,8 @@ public class PrivateServerCommand implements CommandExecutor {
         return false;
     }
 
-    public boolean isBoolean(String input) {
-        return input.equalsIgnoreCase("true") || input.equalsIgnoreCase("false");
+    public boolean isNoBoolean(String input) {
+        return !input.equalsIgnoreCase("true") && !input.equalsIgnoreCase("false");
     }
 
 }
