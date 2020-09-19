@@ -24,7 +24,7 @@ public class ItemBuilder {
         if (material == null) {
             throw new NullPointerException("Check your materials in your config.json." +
                     "\nAlso ONLY use items that exist in your SERVER version." +
-                    "\nThe shown names aren't the same as in code. Please use those ones for code.");
+                    "\nThe shown names aren't the same as in code. Please use those ones for code from the docs.");
         }
         this.itemStack = new ItemStack(material, amount);
     }

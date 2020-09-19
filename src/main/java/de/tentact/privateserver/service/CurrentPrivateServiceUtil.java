@@ -7,7 +7,6 @@ package de.tentact.privateserver.service;
 */
 
 import de.dytanic.cloudnet.driver.CloudNetDriver;
-import de.dytanic.cloudnet.ext.bridge.player.ICloudPlayer;
 import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import de.dytanic.cloudnet.wrapper.Wrapper;
 
@@ -25,12 +24,7 @@ public class CurrentPrivateServiceUtil {
             return;
         }
         UUID serverOwner = this.getProperty("serverowner", UUID.class);
-        ICloudPlayer cloudPlayer = this.iPlayerManager.getOnlinePlayer(serverOwner);
-
-        if (cloudPlayer == null) {
-            return;
-        }
-        this.iPlayerManager.getPlayerExecutor(cloudPlayer).connect(Wrapper.getInstance().getCurrentServiceInfoSnapshot().getName());
+        this.iPlayerManager.getPlayerExecutor(serverOwner).connect(Wrapper.getInstance().getCurrentServiceInfoSnapshot().getName());
     }
 
     /**

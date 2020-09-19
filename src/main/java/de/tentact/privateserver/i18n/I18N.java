@@ -40,11 +40,7 @@ public enum I18N {
 
     I18N(String key, String defaultTranslation, String parameter) {
         this.key = key;
-        if (parameter == null || parameter.isEmpty()) {
-            this.languageAPI.addMessageToDefault(key, defaultTranslation);
-        } else {
-            this.languageAPI.addMessageToDefault(key, defaultTranslation, parameter);
-        }
+        this.languageAPI.addMessageToDefault(key, defaultTranslation, parameter);
     }
 
     public Translation get() {

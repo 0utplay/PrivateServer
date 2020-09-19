@@ -60,7 +60,7 @@ public class PrivateServerCommand implements CommandExecutor {
                 break;
             case "npc": // pserver npc delete || pserver npc create imitadeplayer lookatPlayer
                 if (args[1].equalsIgnoreCase("delete")) {
-                    this.privateServer.removeNPC();
+                    this.privateServer.getPrivateServerUtil().removeNPC();
                     NPCSetting currentNPCSetting = this.privateServerConfig.getNPCSettings();
                     this.privateServerConfig.setNPCSettings(currentNPCSetting.setNPCLocation(null));
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
@@ -74,8 +74,8 @@ public class PrivateServerCommand implements CommandExecutor {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP.get());
                         return false;
                     }
-                    if (this.privateServer.getNPCPool().getNPCs().size() != 0) {
-                        this.privateServer.removeNPC();
+                    if (this.privateServer.getPrivateServerUtil().getNPCPool().getNPCs().size() != 0) {
+                        this.privateServer.getPrivateServerUtil().removeNPC();
                     }
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
@@ -92,7 +92,7 @@ public class PrivateServerCommand implements CommandExecutor {
                             new NPCLocation(player.getLocation()));
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
-                    this.privateServer.spawnNPC();
+                    this.privateServer.getPrivateServerUtil().spawnNPC();
                 } else {
                     languagePlayer.sendMessage(I18N.COMMAND_HELP.get());
                 }

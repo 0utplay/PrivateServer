@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NPCServerItemProperty implements ServerItemProperty {
+public class NPCServerItemProperty {
 
     private final String displayName, materialName, templateToStart, startPermission;
     private final byte subId;

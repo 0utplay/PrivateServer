@@ -19,10 +19,8 @@ public class SkinFetcher {
     private static final String SERVICE_URL = "https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false";
 
     public static String fetchValue(UUID uuid) {
-        if(!getProperties(uuid).contains("value")) {
-            return "";
-        }
-        return getProperties(uuid).get("value", String.class);
+        Document properties = getProperties(uuid);
+        return properties.contains("value") ? properties.get("value", String.class) : "";
     }
 
     public static String fetchValue(String name) {
@@ -30,10 +28,8 @@ public class SkinFetcher {
     }
 
     public static String fetchSignature(UUID uuid) {
-        if(!getProperties(uuid).contains("signature")) {
-            return "";
-        }
-        return getProperties(uuid).get("signature", String.class);
+        Document properties = getProperties(uuid);
+        return properties.contains("signature") ? properties.get("signature", String.class) : "";
     }
 
     public static String fetchSignature(String name) {
@@ -52,19 +48,5 @@ public class SkinFetcher {
             e.printStackTrace();
         }
         return Documents.newDocument();
-        /*
-        JSONParser jsonParser = new JSONParser();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getSkinInputStream(uuid)))) {
-            JSONObject jsonObject =(JSONObject) jsonParser.parse(bufferedReader);
-            JSONArray jsonArray = (JSONArray) jsonObject.get("properties");
-            return (JSONObject) jsonArray.get(0);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return new JSONObject();*/
-    }
-
-    private static String getEmptyIfNull(String input) {
-        return input == null ? "" : input;
     }
 }

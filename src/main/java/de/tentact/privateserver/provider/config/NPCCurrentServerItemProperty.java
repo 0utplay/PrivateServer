@@ -9,7 +9,7 @@ package de.tentact.privateserver.provider.config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NPCCurrentServerItemProperty implements ServerItemProperty {
+public class NPCCurrentServerItemProperty {
 
     private final String displayName;
 

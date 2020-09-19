@@ -6,15 +6,10 @@ package de.tentact.privateserver;
     Uhrzeit: 21:55
 */
 
-import com.github.juliarn.npc.NPC;
-import com.github.juliarn.npc.NPCPool;
-import com.github.juliarn.npc.modifier.MetadataModifier;
-import com.github.juliarn.npc.profile.Profile;
 import de.dytanic.cloudnet.wrapper.Wrapper;
 import de.tentact.privateserver.provider.command.PrivateServerCommand;
 import de.tentact.privateserver.provider.config.Configuration;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
-import de.tentact.privateserver.provider.config.NPCSetting;
 import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import de.tentact.privateserver.provider.listener.PlayerNPCInteract;
 import de.tentact.privateserver.provider.service.PrivateServerUtil;
@@ -24,9 +19,7 @@ import de.tentact.privateserver.service.listener.PlayerQuitListener;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collections;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.logging.Level;
 
 public class PrivateServer extends JavaPlugin {
@@ -34,9 +27,6 @@ public class PrivateServer extends JavaPlugin {
     private Configuration configuration;
     private PrivateServerUtil privateServerUtil;
     private CurrentPrivateServiceUtil currentPrivateServiceUtil;
-
-    private NPCPool npcPool;
-    private int npcId;
 
     public void onEnable() {
         //Check if this plugin runs on a PrivateServer
@@ -63,8 +53,6 @@ public class PrivateServer extends JavaPlugin {
         this.configuration = new Configuration(this);
         this.checkConfiguration();
         this.privateServerUtil = new PrivateServerUtil(this);
-        npcPool = new NPCPool(this);
-        this.spawnNPC();
         new PlayerNPCInteract(this);
     }
 
@@ -87,34 +75,7 @@ public class PrivateServer extends JavaPlugin {
         return this.currentPrivateServiceUtil;
     }
 
-    //Spawn a NPC at the location given in the Configuration
-    public void spawnNPC() {
-        if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
-            NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
-            //TODO: Input Player name to get skin and set it
-            logInfo(settings.getSkinValue());
-            Profile profile = new Profile(UUID.randomUUID(), "0utplayyyy",
-                    Collections.singletonList(new Profile.Property("0utplayyyy",
-                            settings.getSkinValue(), settings.getSkinSignature())));
 
-            //profile.complete();
-            npcId = new NPC.Builder(profile)
-                    .imitatePlayer(settings.isImitatePlayer())
-                    .lookAtPlayer(settings.isLookAtPlayer())
-                    .location(settings.getNPCLocation().getLocation())
-                    .build(npcPool).getEntityId();
-            this.npcPool.getNPC(this.npcId).metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
-        }
-    }
-
-    //Remove a spawned NPC
-    public void removeNPC() {
-        this.npcPool.removeNPC(this.npcId);
-    }
-
-    public NPCPool getNPCPool() {
-        return npcPool;
-    }
 
     private void checkConfiguration() {
         PrivateServerConfig serverConfig = this.configuration.getPrivateServerConfig();

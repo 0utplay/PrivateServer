@@ -25,6 +25,10 @@ public class Configuration {
         if (configFile.exists()) {
             privateServer.logInfo("Found config.json. Reading config.json...");
             document = Documents.jsonStorage().read(configFile);
+            if(!document.contains("config")) {
+                privateServer.logInfo("Config.json has no entry... Resetting to default...");
+                this.writeConfiguration(this.getDefaultServerConfig());
+            }
             return;
         }
         configFile.getParentFile().mkdirs();
@@ -84,7 +88,6 @@ public class Configuration {
 
     /**
      * Rewrites the current {@link Configuration}
-     *
      * @param privateServerConfig the config to set
      */
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
