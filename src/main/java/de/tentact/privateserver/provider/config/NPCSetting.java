@@ -6,8 +6,11 @@ package de.tentact.privateserver.provider.config;
     Uhrzeit: 17:28
 */
 
+import org.bukkit.ChatColor;
+
 public class NPCSetting {
 
+    private final String npcName;
     private final boolean shouldImitatePlayer;
     private final boolean shouldLookAtPlayer;
     private final String skinValue;
@@ -23,7 +26,8 @@ public class NPCSetting {
      * @param skinSignature       the signature of the skin that should be applied to the NPC
      * @param npcLocation         the npcLocation to spawn the NPC at
      */
-    public NPCSetting(boolean shouldImitatePlayer, boolean shouldLookAtPlayer, String skinValue, String skinSignature, NPCLocation npcLocation) {
+    public NPCSetting(String npcName, boolean shouldImitatePlayer, boolean shouldLookAtPlayer, String skinValue, String skinSignature, NPCLocation npcLocation) {
+        this.npcName = npcName;
         this.shouldImitatePlayer = shouldImitatePlayer;
         this.shouldLookAtPlayer = shouldLookAtPlayer;
         this.skinValue = skinValue;
@@ -54,5 +58,9 @@ public class NPCSetting {
 
     public String getSkinSignature() {
         return this.skinSignature;
+    }
+
+    public String getNPCName() {
+        return ChatColor.translateAlternateColorCodes('&', this.npcName);
     }
 }

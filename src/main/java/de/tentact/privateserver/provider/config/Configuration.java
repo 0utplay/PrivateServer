@@ -27,14 +27,14 @@ public class Configuration {
             document = Documents.jsonStorage().read(configFile);
             if(!document.contains("config")) {
                 privateServer.logInfo("Config.json has no entry... Resetting to default...");
-                this.writeConfiguration(this.getDefaultServerConfig());
+                this.writeDefaultConfiguration();
             }
             return;
         }
         configFile.getParentFile().mkdirs();
         privateServer.logInfo("No config.json found...");
         privateServer.logInfo("Creating new config.json");
-        document.append("config", this.getDefaultServerConfig()).json().write(configFile);
+        this.writeDefaultConfiguration();
     }
 
     public PrivateServerConfig getPrivateServerConfig() {
@@ -45,7 +45,6 @@ public class Configuration {
         return new PrivateServerConfig(
                 "PServer",
                 "pserver.basecommand",
-                "&4PrivateServer",
                 new NPCInventory(
                         "&4PrivateServer",
                         "pserver.opennpc",
@@ -58,6 +57,7 @@ public class Configuration {
                         )
                 ),
                 new NPCSetting(
+                        "&4PrivateServer",
                         true,
                         true,
                         null,
@@ -93,5 +93,9 @@ public class Configuration {
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
         document = new DefaultDocument("config", privateServerConfig);
         document.json().write(configFile);
+    }
+
+    private void writeDefaultConfiguration() {
+        this.writeConfiguration(this.getDefaultServerConfig());
     }
 }

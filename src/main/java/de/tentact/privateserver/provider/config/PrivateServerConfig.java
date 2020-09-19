@@ -8,22 +8,20 @@ package de.tentact.privateserver.provider.config;
 
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceTask;
-import org.bukkit.ChatColor;
 
 import java.util.Collection;
 
 public class PrivateServerConfig {
 
-    private final String privateServerTaskName, baseCommandPermission, npcName;
+    private final String privateServerTaskName, baseCommandPermission;
     private final NPCInventory npcInventory;
     private NPCSetting npcSetting;
     private final NPCCurrentServerItemProperty currentServerItem;
     private final Collection<NPCServerItemProperty> startItems;
 
-    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, String npcName, NPCInventory npcInventory, NPCSetting npcSetting, NPCCurrentServerItemProperty currentServerItem, Collection<NPCServerItemProperty> startItems) {
+    public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, NPCInventory npcInventory, NPCSetting npcSetting, NPCCurrentServerItemProperty currentServerItem, Collection<NPCServerItemProperty> startItems) {
         this.privateServerTaskName = privateServerTaskName;
         this.baseCommandPermission = baseCommandPermission;
-        this.npcName = npcName;
         this.npcSetting = npcSetting;
         this.currentServerItem = currentServerItem;
         this.npcInventory = npcInventory;
@@ -60,9 +58,5 @@ public class PrivateServerConfig {
 
     public void setNPCSettings(NPCSetting npcSetting) {
         this.npcSetting = npcSetting;
-    }
-
-    public String getNPCName() {
-        return ChatColor.translateAlternateColorCodes('&', npcName);
     }
 }

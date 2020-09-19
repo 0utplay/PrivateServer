@@ -58,7 +58,7 @@ public class PrivateServerCommand implements CommandExecutor {
             case "create":
                 this.privateServer.getPrivateServerUtil().createPrivateServer(player, args[1]);
                 break;
-            case "npc": // pserver npc delete || pserver npc create imitadeplayer lookatPlayer
+            case "npc": // pserver npc delete || pserver npc create imitadeplayer lookatPlayer NAME
                 if (args[1].equalsIgnoreCase("delete")) {
                     this.privateServer.getPrivateServerUtil().removeNPC();
                     NPCSetting currentNPCSetting = this.privateServerConfig.getNPCSettings();
@@ -66,7 +66,7 @@ public class PrivateServerCommand implements CommandExecutor {
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                 } else if (args[1].equalsIgnoreCase("create")) {
 
-                    if (args.length < 5) {
+                    if (args.length < 6) {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP.get());
                         return false;
                     }
@@ -77,19 +77,26 @@ public class PrivateServerCommand implements CommandExecutor {
                     if (this.privateServer.getPrivateServerUtil().getNPCPool().getNPCs().size() != 0) {
                         this.privateServer.getPrivateServerUtil().removeNPC();
                     }
+
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
                     String skinValue = SkinFetcher.fetchValue(args[4]);
                     String skinSignature = SkinFetcher.fetchSignature(args[4]);
+                    String npcName = args[5];
+
                     if(skinValue.isEmpty() || skinSignature.isEmpty()) {
                         languagePlayer.sendMessage(I18N.SKIN_FETCH_FAIL.get().replace("%PLAYER%", args[4]));
                     }
+
                     NPCSetting setting = new NPCSetting(
+                            npcName,
                             imitatePlayer,
                             lookAtPlayer,
                             skinValue,
                             skinSignature,
-                            new NPCLocation(player.getLocation()));
+                            new NPCLocation(player.getLocation())
+                    );
+
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.getPrivateServerUtil().spawnNPC();

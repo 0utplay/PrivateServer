@@ -86,7 +86,7 @@ public class PrivateServer extends JavaPlugin {
         StringBuilder failedMaterials = new StringBuilder();
         for (NPCServerItemProperty itemProperty : serverConfig.getStartItems()) {
             if (Material.getMaterial(itemProperty.getMaterialName()) == null) {
-                failedMaterials.append(itemProperty.getMaterialName()).append(" ");
+                failedMaterials.append(itemProperty.getMaterialName()).append(", ");
             }
         }
         if (!failedMaterials.toString().isEmpty()) {

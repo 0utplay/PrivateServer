@@ -198,14 +198,12 @@ public class PrivateServerUtil {
     public void spawnNPC() {
         if (this.configuration.getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getNPCSettings();
-            //TODO: Input Player name to get skin and set it
             this.privateServer.logInfo(settings.getSkinValue());
             this.privateServer.logInfo(settings.getSkinSignature());
-            Profile profile = new Profile(UUID.randomUUID(), "0utplayyyy",
-                    Collections.singletonList(new Profile.Property("0utplayyyy",
+            Profile profile = new Profile(UUID.randomUUID(), settings.getNPCName(),
+                    Collections.singletonList(new Profile.Property(settings.getNPCName(),
                             settings.getSkinValue(), settings.getSkinSignature())));
 
-            //profile.complete();
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())

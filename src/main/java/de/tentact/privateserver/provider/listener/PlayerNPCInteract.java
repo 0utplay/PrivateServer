@@ -104,7 +104,7 @@ public class PlayerNPCInteract implements Listener {
                         String templatePrefix = template.split("/")[0];
                         String templateName = template.split("/")[1];
                         if (!player.hasPermission(serverItemProperty.getStartPermission())) {
-                            languagePlayer.sendMessage(I18N.PLAYER_NO_TEMPLATE_START.get()
+                            languagePlayer.sendMessage(I18N.PLAYER_NO_TEMPLATE_START_PERMS.get()
                                     .replace("%TEMPLATE%", serverItemProperty.getTemplateToStart())
                                     .replace("%TEMPLATE_NAME%", templateName)
                                     .replace("%TEMPLATE_PREFIX%", templatePrefix));

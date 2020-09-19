@@ -28,7 +28,7 @@ public enum I18N {
     OWNER_LEFT_KICK_MESSAGE("pserver-owner-left-kick-message", "Der Server wird nun gestoppt.", "%OWNER%"),
     PLAYER_ALREADY_HAS_PSERVER("pserver-player-already-has-pserver", "Du kannst nur einen PServer haben"),
     PLAYER_NO_NPC_OPEN_PERMS("pserver-player-no-npc-open-perms", "Du hast keine Rechte um diesen NPC zu öffnen. Kaufe dir Premium auf Server.de"),
-    PLAYER_NO_TEMPLATE_START("pserver-player-no-template-start-perms", "Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%"),
+    PLAYER_NO_TEMPLATE_START_PERMS("pserver-player-no-template-start-perms", "Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%"),
     OWNER_REQUESTED_STOP_KICK_ALL("pserver-owner-requested-stop-kick-all", "%OWNER% hat seinen Server gestoppt.");
 
     private final LanguageAPI languageAPI = LanguageAPI.getInstance();

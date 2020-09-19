@@ -40,7 +40,7 @@ public class SkinFetcher {
         return new URL(String.format(SERVICE_URL, uuid)).openStream();
     }
 
-    public static Document getProperties(UUID uuid) {
+    private static Document getProperties(UUID uuid) {
         try {
             Document document = Documents.jsonStorage().read(getSkinInputStream(uuid));
             return Documents.newDocument(document.get("properties").getAsJsonArray().get(0));
