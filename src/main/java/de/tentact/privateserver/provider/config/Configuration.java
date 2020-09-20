@@ -35,14 +35,15 @@ public class Configuration {
             }
             return;
         }
+        privateServer.logInfo("No config.json found...");
+        privateServer.logInfo("Creating new config.json");
         try {
             Files.createDirectories(privateServer.getDataFolder().toPath());
+            Files.createFile(this.configFile.toPath());
         } catch (IOException e) {
             privateServer.getLogger().log(Level.WARNING, "While creating directories used by the plugin an exception occurred:");
             e.printStackTrace();
         }
-        privateServer.logInfo("No config.json found...");
-        privateServer.logInfo("Creating new config.json");
         this.writeDefaultConfiguration();
     }
 

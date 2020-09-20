@@ -57,7 +57,7 @@ public class PrivateServerUtil {
      * @return if the service is created and started or not
      */
     public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate, NPCServerItemProperty serverItemProperty) {
-        if (this.privateServer.getConfiguration().getPrivateServerConfig().getPrivateServerTask() == null) {
+        if (this.configuration.getPrivateServerTask() == null) {
             return false;
         }
         ServiceTask serviceTask = this.configuration.getPrivateServerTask();
@@ -198,8 +198,6 @@ public class PrivateServerUtil {
     public void spawnNPC() {
         if (this.configuration.getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getNPCSettings();
-            this.privateServer.logInfo(settings.getSkinValue());
-            this.privateServer.logInfo(settings.getSkinSignature());
             Profile profile = new Profile(UUID.randomUUID(), settings.getNPCName(),
                     Collections.singletonList(new Profile.Property(settings.getNPCName(),
                             settings.getSkinValue(), settings.getSkinSignature())));
@@ -209,7 +207,10 @@ public class PrivateServerUtil {
                     .lookAtPlayer(settings.isLookAtPlayer())
                     .location(settings.getNPCLocation().getLocation())
                     .build(npcPool).getEntityId();
-            this.npcPool.getNPC(this.npcId).metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
+            NPC npc = this.npcPool.getNPC(this.npcId);
+            if(npc != null) {
+                npc.metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
+            }
         }
     }
 

@@ -8,6 +8,7 @@ package de.tentact.privateserver.provider.config;
 
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceTask;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -18,6 +19,7 @@ public class PrivateServerConfig {
     private NPCSetting npcSetting;
     private final NPCCurrentServerItemProperty currentServerItem;
     private final Collection<NPCServerItemProperty> startItems;
+    private final transient ServiceTask serviceTask;
 
     public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, NPCInventory npcInventory, NPCSetting npcSetting, NPCCurrentServerItemProperty currentServerItem, Collection<NPCServerItemProperty> startItems) {
         this.privateServerTaskName = privateServerTaskName;
@@ -26,6 +28,7 @@ public class PrivateServerConfig {
         this.currentServerItem = currentServerItem;
         this.npcInventory = npcInventory;
         this.startItems = startItems;
+        this.serviceTask = CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask(this.privateServerTaskName);
     }
 
     public NPCInventory getNPCInventory() {
@@ -39,9 +42,9 @@ public class PrivateServerConfig {
     public String getPrivateServerTaskName() {
         return this.privateServerTaskName;
     }
-
+    @Nullable
     public ServiceTask getPrivateServerTask() {
-        return CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask(this.privateServerTaskName);
+       return this.serviceTask;
     }
 
     public String getBaseCommandPermission() {
