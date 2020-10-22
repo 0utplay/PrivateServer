@@ -32,7 +32,7 @@ public class CurrentPrivateServiceUtil {
      * @return if the server is a PrivateServer
      */
     public boolean isPrivateServer() {
-        return Wrapper.getInstance().getCurrentServiceInfoSnapshot().getProperties().contains("serverowner");
+        return this.getOwner() != null;
     }
 
     public UUID getOwner() {

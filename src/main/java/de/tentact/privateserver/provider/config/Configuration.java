@@ -21,7 +21,6 @@ import java.util.logging.Level;
 public class Configuration {
 
     private Document document = new DefaultDocument();
-
     private final File configFile;
 
     public Configuration(PrivateServer privateServer) {

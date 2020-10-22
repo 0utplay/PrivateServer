@@ -13,13 +13,13 @@ import de.tentact.languageapi.i18n.Translation;
 public enum I18N {
 
     PREFIX("pserver-prefix", "&ePServer x &7"),
-    NO_BASECOMMAND_PERMISSION("pserver-basecommand-no-permission", "Dazu hast du keine Rechte"),
+    BASECOMMAND_PERMISSION("pserver-basecommand-no-permission", "Dazu hast du keine Rechte"),
     COMMAND_HELP("pserver-basecommand-help", "Nutze /pserver create <Prefix/Name>\n" +
             "Nutze /pserver npc create <shouldImitadePlayer> <shouldLookAtPlayer> <NPCName>\n"+
             "Nutze /pserver npc delete"),
     SKIN_FETCH_FAIL("pserver-command-skin-fetch-fail", "Der Skin von %PLAYER% konnte nicht geladen werden.", "%PLAYER%"),
     WRONG_TEMPLATE_FORMAT("pserver-wrong-template-format", "Templates sollten folgender Maßsen aussehen: Prefix/Name"),
-    NO_BASECOMMAND_ON_PSERVER("pserver-basecommand-on-pserver", "Du kannst diesen Command nicht auf einem privaten Server nutzen."),
+    BASECOMMAND_ON_PSERVER("pserver-basecommand-on-pserver", "Du kannst diesen Command nicht auf einem privaten Server nutzen."),
     STARTING_PSERVER("pserver-starting", "Es wird ein privater Server mit dem Template %TEMPLATE_PREFIX% gestartet.", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%"),
     TELEPORT_AFTER_START("pserver-teleport-after-start", "Sobald der Server hochgefahren ist, wirst du teleportiert."),
     STARTING_PSERVER_ERROR("pserver-starting-error", "Beim Starten des Servers ist ein Fehler aufgetreten."),

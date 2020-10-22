@@ -21,9 +21,9 @@ import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.player.LanguagePlayer;
 import de.tentact.privateserver.PrivateServer;
 import de.tentact.privateserver.i18n.I18N;
+import de.tentact.privateserver.provider.config.Configuration;
 import de.tentact.privateserver.provider.config.NPCServerItemProperty;
 import de.tentact.privateserver.provider.config.NPCSetting;
-import de.tentact.privateserver.provider.config.PrivateServerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -34,7 +34,7 @@ import java.util.UUID;
 public class PrivateServerUtil {
 
     private final PrivateServer privateServer;
-    private final PrivateServerConfig configuration;
+    private final Configuration configuration;
     private final CloudNetDriver cloudNetDriver = CloudNetDriver.getInstance();
     private final IPlayerManager iPlayerManager;
     private final NPCPool npcPool;
@@ -42,7 +42,7 @@ public class PrivateServerUtil {
 
     public PrivateServerUtil(PrivateServer privateServer) {
         this.privateServer = privateServer;
-        this.configuration = this.privateServer.getConfiguration().getPrivateServerConfig();
+        this.configuration = this.privateServer.getConfiguration();
         this.iPlayerManager = this.cloudNetDriver.getServicesRegistry().getFirstService(IPlayerManager.class);
         this.npcPool = new NPCPool(privateServer);
         this.spawnNPC();
@@ -57,10 +57,7 @@ public class PrivateServerUtil {
      * @return if the service is created and started or not
      */
     public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate, NPCServerItemProperty serverItemProperty) {
-        if (this.configuration.getPrivateServerTask() == null) {
-            return false;
-        }
-        ServiceTask serviceTask = this.configuration.getPrivateServerTask();
+        ServiceTask serviceTask = this.configuration.getPrivateServerConfig().getPrivateServerTask();
 
         if (serviceTask == null) {
             return false;
@@ -107,7 +104,7 @@ public class PrivateServerUtil {
 
         String templatePrefix = template.split("/")[0];
         String templateName = template.split("/")[1];
-        NPCServerItemProperty serverItem = this.configuration.getStartItems()
+        NPCServerItemProperty serverItem = this.configuration.getPrivateServerConfig().getStartItems()
                 .stream()
                 .filter(npcServerItemProperty -> npcServerItemProperty.getTemplateToStart().equalsIgnoreCase(template)).findFirst().orElse(null);
 
@@ -156,7 +153,7 @@ public class PrivateServerUtil {
      * @return if the serverOwner has an PrivateServer
      */
     public boolean hasPrivateServer(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerTaskName())) {
+        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
             if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
                 return true;
             }
@@ -178,7 +175,7 @@ public class PrivateServerUtil {
     }
 
     public Optional<ServiceInfoSnapshot> getServiceInfoSnapshot(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerTaskName())) {
+        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
             if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
                 return Optional.of(cloudService);
             }
@@ -194,27 +191,36 @@ public class PrivateServerUtil {
         return this.getProperty(serviceInfoSnapshot, property, String.class);
     }
 
-    //Spawn a NPC at the location given in the Configuration
+    //Spawn a NPC at the location given in the configuration
     public void spawnNPC() {
-        if (this.configuration.getNPCSettings().getNPCLocation() != null) {
-            NPCSetting settings = this.configuration.getNPCSettings();
+        Bukkit.broadcastMessage("SPAWN");
+        if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
+            NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             Profile profile = new Profile(UUID.randomUUID(), settings.getNPCName(),
-                    Collections.singletonList(new Profile.Property(settings.getNPCName(),
-                            settings.getSkinValue(), settings.getSkinSignature())));
+                    Collections.singletonList(new Profile.Property("textures",
+                            settings.getSkinValue(), null)));
+            //profile = new Profile(settings.getNPCName());
+           // profile.complete();
 
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())
                     .location(settings.getNPCLocation().getLocation())
                     .build(npcPool).getEntityId();
+            Bukkit.broadcastMessage(settings.getNPCLocation().getLocation().getWorld().getName());
             NPC npc = this.npcPool.getNPC(this.npcId);
             if(npc != null) {
                 npc.metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
             }
+
+            Bukkit.broadcastMessage("SPAWN2");
         }
     }
 
-    //Remove a spawned NPC
+    public NPC getNPC() {
+        return this.npcPool.getNPC(this.npcId);
+    }
+
     public void removeNPC() {
         this.npcPool.removeNPC(this.npcId);
     }

@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.0utplay.LanguageAPI</groupId>
             <artifactId>API</artifactId>
-            <version>1.8-RELEASE</version>
+            <version>development-3ff67f49b2-1</version>
         </dependency>
         <dependency>
             <groupId>de.dytanic.cloudnet</groupId>
@@ -103,7 +103,8 @@
         <dependency>
             <groupId>com.github.juliarn</groupId>
             <artifactId>npc-lib</artifactId>
-            <version>2.3-RELEASE</version>
+            <version>development-d48524cb7a-1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

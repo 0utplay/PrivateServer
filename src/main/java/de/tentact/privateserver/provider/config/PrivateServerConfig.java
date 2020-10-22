@@ -42,6 +42,7 @@ public class PrivateServerConfig {
     public String getPrivateServerTaskName() {
         return this.privateServerTaskName;
     }
+
     @Nullable
     public ServiceTask getPrivateServerTask() {
        return this.serviceTask;

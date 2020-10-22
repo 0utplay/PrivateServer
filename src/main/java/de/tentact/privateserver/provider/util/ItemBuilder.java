@@ -59,7 +59,9 @@ public class ItemBuilder {
         Collections.replaceAll(lore, "%TEMPLATE_PREFIX%", startTemplate.split("/")[0]);
         Collections.replaceAll(lore, "%TEMPLATE_NAME%", startTemplate.split("/")[1]);
 
-        this.setDisplayName(serverItemProperty.getDisplayName().replace("%TEMPLATE%", startTemplate)
+        this.setDisplayName(
+                serverItemProperty.getDisplayName()
+                .replace("%TEMPLATE%", startTemplate)
                 .replace("%TEMPLATE_PREFIX%", startTemplate.split("/")[0])
                 .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1]))
                 .setLore(lore)

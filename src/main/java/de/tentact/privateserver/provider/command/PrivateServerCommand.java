@@ -43,11 +43,11 @@ public class PrivateServerCommand implements CommandExecutor {
             return false;
         }
         if (!player.hasPermission(privateServerConfig.getBaseCommandPermission())) {
-            languagePlayer.sendMessage(I18N.NO_BASECOMMAND_PERMISSION.get());
+            languagePlayer.sendMessage(I18N.BASECOMMAND_PERMISSION.get());
             return false;
         }
         if (this.privateServer.getCurrentPrivateServiceUtil() != null) {
-            languagePlayer.sendMessage(I18N.NO_BASECOMMAND_ON_PSERVER.get());
+            languagePlayer.sendMessage(I18N.BASECOMMAND_ON_PSERVER.get());
             return false;
         }
         if (args.length < 2) {
@@ -65,7 +65,6 @@ public class PrivateServerCommand implements CommandExecutor {
                     this.privateServerConfig.setNPCSettings(currentNPCSetting.setNPCLocation(null));
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                 } else if (args[1].equalsIgnoreCase("create")) {
-
                     if (args.length < 6) {
                         languagePlayer.sendMessage(I18N.COMMAND_HELP.get());
                         return false;
@@ -77,7 +76,6 @@ public class PrivateServerCommand implements CommandExecutor {
                     if (this.privateServer.getPrivateServerUtil().getNPCPool().getNPCs().size() != 0) {
                         this.privateServer.getPrivateServerUtil().removeNPC();
                     }
-
                     boolean imitatePlayer = Boolean.parseBoolean(args[2]);
                     boolean lookAtPlayer = Boolean.parseBoolean(args[3]);
                     String skinValue = SkinFetcher.fetchValue(args[4]);

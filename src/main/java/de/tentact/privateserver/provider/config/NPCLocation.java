@@ -31,7 +31,6 @@ public class NPCLocation {
         this.yaw = yaw;
         this.pitch = pitch;
         this.worldName = worldName;
-        this.location = new Location(Bukkit.getWorld(worldName), x, y, z, yaw, pitch);
     }
 
     public Location getLocation() {

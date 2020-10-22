@@ -32,10 +32,10 @@ public class PrivateServer extends JavaPlugin {
         //Check if this plugin runs on a PrivateServer
         if (this.isPrivateServer()) {
             //Init this plugin as a PrivateServer
-            initPrivateServer();
+            this.initPrivateServer();
         } else {
             //Init this plugin as PrivateServer provider
-            initProvider();
+            this.initProvider();
         }
         Objects.requireNonNull(this.getCommand("privateserver")).setExecutor(new PrivateServerCommand(this));
     }
@@ -57,7 +57,7 @@ public class PrivateServer extends JavaPlugin {
     }
 
     void initPrivateServer() {
-        this.getLogger().log(Level.INFO, "Initialising PrivateServer");
+        this.getLogger().log(Level.INFO, "Initialising PrivateServer...");
         this.configuration = new Configuration(this);
         this.currentPrivateServiceUtil = new CurrentPrivateServiceUtil();
         this.currentPrivateServiceUtil.sendOwner();
@@ -74,8 +74,6 @@ public class PrivateServer extends JavaPlugin {
     public CurrentPrivateServiceUtil getCurrentPrivateServiceUtil() {
         return this.currentPrivateServiceUtil;
     }
-
-
 
     private void checkConfiguration() {
         PrivateServerConfig serverConfig = this.configuration.getPrivateServerConfig();
