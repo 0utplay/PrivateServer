@@ -35,7 +35,6 @@ public class PrivateServerUtil {
 
     private final PrivateServer privateServer;
     private final Configuration configuration;
-    private final CloudNetDriver cloudNetDriver = CloudNetDriver.getInstance();
     private final IPlayerManager iPlayerManager;
     private final NPCPool npcPool;
     private int npcId;
@@ -43,7 +42,7 @@ public class PrivateServerUtil {
     public PrivateServerUtil(PrivateServer privateServer) {
         this.privateServer = privateServer;
         this.configuration = this.privateServer.getConfiguration();
-        this.iPlayerManager = this.cloudNetDriver.getServicesRegistry().getFirstService(IPlayerManager.class);
+        this.iPlayerManager = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class);
         this.npcPool = new NPCPool(privateServer);
         this.spawnNPC();
     }
@@ -124,7 +123,7 @@ public class PrivateServerUtil {
             return;
         }
 
-        ServiceTemplate serviceTemplate = this.cloudNetDriver.getLocalTemplateStorageTemplates()
+        ServiceTemplate serviceTemplate = CloudNetDriver.getInstance().getLocalTemplateStorageTemplates()
                 .stream()
                 .filter(sTemplate -> sTemplate.getPrefix().equalsIgnoreCase(templatePrefix) && sTemplate.getName().equalsIgnoreCase(templateName)).findFirst().orElse(null);
 
@@ -153,7 +152,7 @@ public class PrivateServerUtil {
      * @return if the serverOwner has an PrivateServer
      */
     public boolean hasPrivateServer(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
+        for (ServiceInfoSnapshot cloudService : CloudNetDriver.getInstance().getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
             if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
                 return true;
             }
@@ -175,7 +174,7 @@ public class PrivateServerUtil {
     }
 
     public Optional<ServiceInfoSnapshot> getServiceInfoSnapshot(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : this.cloudNetDriver.getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
+        for (ServiceInfoSnapshot cloudService : CloudNetDriver.getInstance().getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
             if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
                 return Optional.of(cloudService);
             }
@@ -193,14 +192,13 @@ public class PrivateServerUtil {
 
     //Spawn a NPC at the location given in the configuration
     public void spawnNPC() {
-        Bukkit.broadcastMessage("SPAWN");
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
             Profile profile = new Profile(UUID.randomUUID(), settings.getNPCName(),
                     Collections.singletonList(new Profile.Property("textures",
                             settings.getSkinValue(), null)));
             //profile = new Profile(settings.getNPCName());
-           // profile.complete();
+            // profile.complete();
 
             npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
@@ -209,11 +207,9 @@ public class PrivateServerUtil {
                     .build(npcPool).getEntityId();
             Bukkit.broadcastMessage(settings.getNPCLocation().getLocation().getWorld().getName());
             NPC npc = this.npcPool.getNPC(this.npcId);
-            if(npc != null) {
+            if (npc != null) {
                 npc.metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
             }
-
-            Bukkit.broadcastMessage("SPAWN2");
         }
     }
 

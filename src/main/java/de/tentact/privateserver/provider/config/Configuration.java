@@ -40,8 +40,7 @@ public class Configuration {
             Files.createDirectories(privateServer.getDataFolder().toPath());
             Files.createFile(this.configFile.toPath());
         } catch (IOException e) {
-            privateServer.getLogger().log(Level.WARNING, "While creating directories used by the plugin an exception occurred:");
-            e.printStackTrace();
+            privateServer.getLogger().log(Level.WARNING, "While creating directories used by the plugin an exception occurred:", e);
         }
         this.writeDefaultConfiguration();
     }
@@ -102,7 +101,7 @@ public class Configuration {
      */
     public void writeConfiguration(PrivateServerConfig privateServerConfig) {
         this.document = new DefaultDocument("config", privateServerConfig);
-        this.document.json().write(configFile);
+        this.document.json().write(this.configFile);
     }
 
     private void writeDefaultConfiguration() {

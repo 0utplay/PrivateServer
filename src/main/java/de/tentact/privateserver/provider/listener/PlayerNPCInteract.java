@@ -94,6 +94,7 @@ public class PlayerNPCInteract implements Listener {
                     .stream()
                     .filter(serverItemProperty ->
                             serverItemProperty.getDisplayName().equalsIgnoreCase(itemStack.getItemMeta().getDisplayName()))
+                    .filter(serverItemProperty -> serverItemProperty.getInventorySlot() == event.getSlot())
                     .findFirst()
                     .ifPresent(serverItemProperty -> {
                         LanguagePlayer languagePlayer = this.playerExecutor.getLanguagePlayer(player.getUniqueId());
@@ -133,5 +134,4 @@ public class PlayerNPCInteract implements Listener {
                                 npcServerItemProperty.isShowIfNoPerms())
                 .collect(Collectors.toList());
     }
-
 }

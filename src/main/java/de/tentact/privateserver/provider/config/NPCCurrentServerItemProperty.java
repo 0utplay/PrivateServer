@@ -33,6 +33,7 @@ public class NPCCurrentServerItemProperty {
         this.subId = subId;
         this.lore = new ArrayList<>(lore);
         this.inventorySlot = inventorySlot;
+        
     }
 
     public String getDisplayName() {

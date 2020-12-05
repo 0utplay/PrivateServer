@@ -105,7 +105,7 @@ public class PrivateServerCommand implements CommandExecutor {
         return false;
     }
 
-    public boolean isNoBoolean(String input) {
+    private boolean isNoBoolean(String input) {
         return !input.equalsIgnoreCase("true") && !input.equalsIgnoreCase("false");
     }
 

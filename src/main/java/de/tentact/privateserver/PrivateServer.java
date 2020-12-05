@@ -94,6 +94,6 @@ public class PrivateServer extends JavaPlugin {
     }
 
     public void logInfo(String message) {
-        this.getLogger().log(Level.INFO, message);
+        this.getLogger().info(message);
     }
 }

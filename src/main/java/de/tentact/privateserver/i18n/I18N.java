@@ -32,7 +32,6 @@ public enum I18N {
     PLAYER_NO_TEMPLATE_START_PERMS("pserver-player-no-template-start-perms", "Du hast keine Rechte diesen Server (%TEMPLATE%) zustarten. ", "%TEMPLATE_PREFIX%,%TEMPLATE_NAME%,%TEMPLATE%"),
     OWNER_REQUESTED_STOP_KICK_ALL("pserver-owner-requested-stop-kick-all", "%OWNER% hat seinen Server gestoppt.");
 
-    private final LanguageAPI languageAPI = LanguageAPI.getInstance();
     private final String key;
 
     I18N(String key, String defaultTranslation) {
@@ -41,7 +40,7 @@ public enum I18N {
 
     I18N(String key, String defaultTranslation, String parameter) {
         this.key = key;
-        this.languageAPI.addMessageToDefault(key, defaultTranslation, parameter);
+        LanguageAPI.getInstance().addMessageToDefault(key, defaultTranslation, parameter);
     }
 
     public Translation get() {
@@ -50,8 +49,8 @@ public enum I18N {
 
     public Translation get(boolean withPrefix) {
         if (withPrefix) {
-            return this.languageAPI.getTranslationWithPrefix(PREFIX.get(false), this.key);
+            return LanguageAPI.getInstance().getTranslationWithPrefix(PREFIX.get(false), this.key);
         }
-        return this.languageAPI.getTranslation(this.key);
+        return LanguageAPI.getInstance().getTranslation(this.key);
     }
 }
