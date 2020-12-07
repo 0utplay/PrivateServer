@@ -49,6 +49,23 @@
         </plugins>
     </build>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>tentact-snapshot</id>
+            <url>https://archiva.tentact.de/repository/tentact-release/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>tentact-snapshot</id>
+            <url>http://archiva.tentact.de/repository/tentact-snapshot/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>jitpack</id>
@@ -61,6 +78,10 @@
         <repository>
             <id>cloudnet</id>
             <url>https://repo.cloudnetservice.eu/repository/snapshots/</url>
+        </repository>
+        <repository>
+            <id>tentact-snapshot</id>
+            <url>https://archiva.tentact.de/repository/tentact-snapshot/</url>
         </repository>
     </repositories>
 
@@ -78,9 +99,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.0utplay.LanguageAPI</groupId>
+            <groupId>de.tentact.languageapi</groupId>
             <artifactId>API</artifactId>
-            <version>development-bb738ccf80-1</version>
+            <version>1.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>de.dytanic.cloudnet</groupId>
