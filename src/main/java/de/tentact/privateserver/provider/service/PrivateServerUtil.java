@@ -1,10 +1,29 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 0utplay (Aldin Sijamhodzic)
+ * Copyright (c) 2020 contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package de.tentact.privateserver.provider.service;
-/*  Created in the IntelliJ IDEA.
-    Copyright(c) 2020
-    Created by 0utplay | Aldin Sijamhodzic
-    Datum: 05.08.2020
-    Uhrzeit: 12:51
-*/
 
 import com.github.juliarn.npc.NPC;
 import com.github.juliarn.npc.NPCPool;
@@ -35,14 +54,12 @@ public class PrivateServerUtil {
 
     private final PrivateServer privateServer;
     private final Configuration configuration;
-    private final IPlayerManager iPlayerManager;
     private final NPCPool npcPool;
     private int npcId;
 
     public PrivateServerUtil(PrivateServer privateServer) {
         this.privateServer = privateServer;
         this.configuration = this.privateServer.getConfiguration();
-        this.iPlayerManager = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class);
         this.npcPool = new NPCPool(privateServer);
         this.spawnNPC();
     }
@@ -55,24 +72,26 @@ public class PrivateServerUtil {
      * @param serverItemProperty a {@link NPCServerItemProperty} to get settings from
      * @return if the service is created and started or not
      */
-    public boolean startPrivateServer(UUID serverOwner, ServiceTemplate serviceTemplate, NPCServerItemProperty serverItemProperty) {
+    public boolean startPrivateServer(
+            UUID serverOwner, ServiceTemplate serviceTemplate, NPCServerItemProperty serverItemProperty) {
         ServiceTask serviceTask = this.configuration.getPrivateServerConfig().getPrivateServerTask();
 
         if (serviceTask == null) {
             return false;
         }
-        JsonDocument document = new JsonDocument("serverowner", serverOwner)
-                .append("templatePrefix", serviceTemplate.getPrefix())
-                .append("templateName", serviceTemplate.getName())
-                .append("autoStopOnOwnerLeave", serverItemProperty.isAutoStopOnOwnerLeave())
-                .append("autoStopOnEmpty", serverItemProperty.isAutoStopIfEmpty());
+        JsonDocument document =
+                new JsonDocument("serverowner", serverOwner)
+                        .append("templatePrefix", serviceTemplate.getPrefix())
+                        .append("templateName", serviceTemplate.getName())
+                        .append("autoStopOnOwnerLeave", serverItemProperty.isAutoStopOnOwnerLeave())
+                        .append("autoStopOnEmpty", serverItemProperty.isAutoStopIfEmpty());
 
-        ServiceInfoSnapshot serviceInfoSnapshot = ServiceConfiguration
-                .builder(serviceTask)
-                .addTemplates(serviceTemplate)
-                .properties(document)
-                .build()
-                .createNewService();
+        ServiceInfoSnapshot serviceInfoSnapshot =
+                ServiceConfiguration.builder(serviceTask)
+                        .addTemplates(serviceTemplate)
+                        .properties(document)
+                        .build()
+                        .createNewService();
         if (serviceInfoSnapshot == null) {
             return false;
         }
@@ -87,7 +106,8 @@ public class PrivateServerUtil {
      * @param template the template to create a server with
      */
     public void createPrivateServer(Player player, String template) {
-        LanguagePlayer languagePlayer = LanguageAPI.getInstance().getPlayerExecutor().getLanguagePlayer(player.getUniqueId());
+        LanguagePlayer languagePlayer =
+                LanguageAPI.getInstance().getPlayerExecutor().getLanguagePlayer(player.getUniqueId());
         if (languagePlayer == null) {
             return;
         }
@@ -103,45 +123,69 @@ public class PrivateServerUtil {
 
         String templatePrefix = template.split("/")[0];
         String templateName = template.split("/")[1];
-        NPCServerItemProperty serverItem = this.configuration.getPrivateServerConfig().getStartItems()
-                .stream()
-                .filter(npcServerItemProperty -> npcServerItemProperty.getTemplateToStart().equalsIgnoreCase(template)).findFirst().orElse(null);
+        NPCServerItemProperty serverItem =
+                this.configuration.getPrivateServerConfig().getStartItems().stream()
+                        .filter(
+                                npcServerItemProperty ->
+                                        npcServerItemProperty.getTemplateToStart().equalsIgnoreCase(template))
+                        .findFirst()
+                        .orElse(null);
 
         if (serverItem == null) {
-            languagePlayer.sendMessage(I18N.TEMPLATE_NOT_FOUND.get()
-                    .replace("%TEMPLATE%", template)
-                    .replace("%TEMPLATE_NAME%", templateName)
-                    .replace("%TEMPLATE_PREFIX%", templatePrefix));
+            languagePlayer.sendMessage(
+                    I18N.TEMPLATE_NOT_FOUND
+                            .get()
+                            .replace("%TEMPLATE%", template)
+                            .replace("%TEMPLATE_NAME%", templateName)
+                            .replace("%TEMPLATE_PREFIX%", templatePrefix));
             return;
         }
 
         if (!player.hasPermission(serverItem.getStartPermission())) {
-            languagePlayer.sendMessage(I18N.NO_TEMPLATE_START_PERMISSION.get()
-                    .replace("%TEMPLATE%", template)
-                    .replace("%TEMPLATE_NAME%", templateName)
-                    .replace("%TEMPLATE_PREFIX%", templatePrefix));
+            languagePlayer.sendMessage(
+                    I18N.NO_TEMPLATE_START_PERMISSION
+                            .get()
+                            .replace("%TEMPLATE%", template)
+                            .replace("%TEMPLATE_NAME%", templateName)
+                            .replace("%TEMPLATE_PREFIX%", templatePrefix));
             return;
         }
 
-        ServiceTemplate serviceTemplate = CloudNetDriver.getInstance().getLocalTemplateStorageTemplates()
-                .stream()
-                .filter(sTemplate -> sTemplate.getPrefix().equalsIgnoreCase(templatePrefix) && sTemplate.getName().equalsIgnoreCase(templateName)).findFirst().orElse(null);
+        ServiceTemplate serviceTemplate =
+                CloudNetDriver.getInstance().getLocalTemplateStorageTemplates().stream()
+                        .filter(
+                                sTemplate ->
+                                        sTemplate.getPrefix().equalsIgnoreCase(templatePrefix)
+                                                && sTemplate.getName().equalsIgnoreCase(templateName))
+                        .findFirst()
+                        .orElse(null);
 
         if (serviceTemplate == null) {
-            languagePlayer.sendMessage(I18N.TEMPLATE_NOT_FOUND.get()
-                    .replace("%TEMPLATE%", template)
-                    .replace("%TEMPLATE_NAME%", templateName)
-                    .replace("%TEMPLATE_PREFIX%", templatePrefix));
+            languagePlayer.sendMessage(
+                    I18N.TEMPLATE_NOT_FOUND
+                            .get()
+                            .replace("%TEMPLATE%", template)
+                            .replace("%TEMPLATE_NAME%", templateName)
+                            .replace("%TEMPLATE_PREFIX%", templatePrefix));
             return;
         }
 
-        boolean started = this.privateServer.getPrivateServerUtil().startPrivateServer(languagePlayer.getUniqueId(), serviceTemplate, serverItem);
+        boolean started =
+                this.privateServer
+                        .getPrivateServerUtil()
+                        .startPrivateServer(languagePlayer.getUniqueId(), serviceTemplate, serverItem);
         if (started) {
-            languagePlayer.sendMessage(I18N.STARTING_PSERVER.get()
-                    .replace("%TEMPLATE%", template)
-                    .replace("%TEMPLATE_NAME%", templateName)
-                    .replace("%TEMPLATE_PREFIX%", templatePrefix));
-            Bukkit.getScheduler().runTaskLater(this.privateServer, () -> languagePlayer.sendMessage(I18N.TELEPORT_AFTER_START.get()), 20 * 2);
+            languagePlayer.sendMessage(
+                    I18N.STARTING_PSERVER
+                            .get()
+                            .replace("%TEMPLATE%", template)
+                            .replace("%TEMPLATE_NAME%", templateName)
+                            .replace("%TEMPLATE_PREFIX%", templatePrefix));
+            Bukkit.getScheduler()
+                    .runTaskLater(
+                            this.privateServer,
+                            () -> languagePlayer.sendMessage(I18N.TELEPORT_AFTER_START.get()),
+                            20 * 2);
             return;
         }
         languagePlayer.sendMessage(I18N.STARTING_PSERVER_ERROR.get());
@@ -152,8 +196,13 @@ public class PrivateServerUtil {
      * @return if the serverOwner has an PrivateServer
      */
     public boolean hasPrivateServer(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : CloudNetDriver.getInstance().getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
-            if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
+        for (ServiceInfoSnapshot cloudService :
+                CloudNetDriver.getInstance()
+                        .getCloudServiceProvider()
+                        .getCloudServices(
+                                this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
+            if (cloudService.getProperties().contains("serverowner")
+                    && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
                 return true;
             }
         }
@@ -169,13 +218,23 @@ public class PrivateServerUtil {
         if (!this.hasPrivateServer(serverOwner)) {
             return;
         }
-        this.getServiceInfoSnapshot(serverOwner).ifPresent(serviceInfoSnapshot ->
-                this.iPlayerManager.getPlayerExecutor(serverOwner).connect(serviceInfoSnapshot.getName()));
+        IPlayerManager playerManager = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class);
+        this.getServiceInfoSnapshot(serverOwner)
+                .ifPresent(
+                        serviceInfoSnapshot ->
+                                playerManager
+                                        .getPlayerExecutor(serverOwner)
+                                        .connect(serviceInfoSnapshot.getName()));
     }
 
     public Optional<ServiceInfoSnapshot> getServiceInfoSnapshot(UUID serverOwner) {
-        for (ServiceInfoSnapshot cloudService : CloudNetDriver.getInstance().getCloudServiceProvider().getCloudServices(this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
-            if (cloudService.getProperties().contains("serverowner") && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
+        for (ServiceInfoSnapshot cloudService :
+                CloudNetDriver.getInstance()
+                        .getCloudServiceProvider()
+                        .getCloudServices(
+                                this.configuration.getPrivateServerConfig().getPrivateServerTaskName())) {
+            if (cloudService.getProperties().contains("serverowner")
+                    && cloudService.getProperties().get("serverowner", UUID.class).equals(serverOwner)) {
                 return Optional.of(cloudService);
             }
         }
@@ -190,22 +249,26 @@ public class PrivateServerUtil {
         return this.getProperty(serviceInfoSnapshot, property, String.class);
     }
 
-    //Spawn a NPC at the location given in the configuration
+    // Spawn a NPC at the location given in the configuration
     public void spawnNPC() {
         if (this.configuration.getPrivateServerConfig().getNPCSettings().getNPCLocation() != null) {
             NPCSetting settings = this.configuration.getPrivateServerConfig().getNPCSettings();
-            Profile profile = new Profile(UUID.randomUUID(), settings.getNPCName(),
-                    Collections.singletonList(new Profile.Property("textures",
-                            settings.getSkinValue(), null)));
-            //profile = new Profile(settings.getNPCName());
+            Profile profile =
+                    new Profile(
+                            UUID.randomUUID(),
+                            settings.getNPCName(),
+                            Collections.singletonList(
+                                    new Profile.Property("textures", settings.getSkinValue(), null)));
+            // profile = new Profile(settings.getNPCName());
             // profile.complete();
 
-            npcId = new NPC.Builder(profile)
-                    .imitatePlayer(settings.isImitatePlayer())
-                    .lookAtPlayer(settings.isLookAtPlayer())
-                    .location(settings.getNPCLocation().getLocation())
-                    .build(npcPool).getEntityId();
-            Bukkit.broadcastMessage(settings.getNPCLocation().getLocation().getWorld().getName());
+            npcId =
+                    new NPC.Builder(profile)
+                            .imitatePlayer(settings.isImitatePlayer())
+                            .lookAtPlayer(settings.isLookAtPlayer())
+                            .location(settings.getNPCLocation().getLocation())
+                            .build(npcPool)
+                            .getEntityId();
             NPC npc = this.npcPool.getNPC(this.npcId);
             if (npc != null) {
                 npc.metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
@@ -224,5 +287,4 @@ public class PrivateServerUtil {
     public NPCPool getNPCPool() {
         return npcPool;
     }
-
 }
