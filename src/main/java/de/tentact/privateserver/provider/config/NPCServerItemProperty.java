@@ -111,6 +111,6 @@ public class NPCServerItemProperty {
     }
 
     public boolean isAutoStopIfEmpty() {
-        return autoStopIfEmpty;
+        return this.autoStopIfEmpty;
     }
 }

@@ -104,7 +104,6 @@ public class PrivateServerCommand implements CommandExecutor {
                     if(skinValue.isEmpty() || skinSignature.isEmpty()) {
                         languagePlayer.sendMessage(I18N.SKIN_FETCH_FAIL.get().replace("%PLAYER%", args[4]));
                     }
-
                     NPCSetting setting = new NPCSetting(
                             npcName,
                             imitatePlayer,
@@ -113,7 +112,6 @@ public class PrivateServerCommand implements CommandExecutor {
                             skinSignature,
                             new NPCLocation(player.getLocation())
                     );
-
                     this.privateServerConfig.setNPCSettings(setting);
                     this.privateServer.getConfiguration().writeConfiguration(this.privateServerConfig);
                     this.privateServer.getPrivateServerUtil().spawnNPC();

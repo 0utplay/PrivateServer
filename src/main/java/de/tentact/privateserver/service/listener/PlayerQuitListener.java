@@ -54,13 +54,13 @@ public class PlayerQuitListener implements Listener {
             return;
         }
         if (this.currentPrivateServiceUtil.isAutoStopOnOwnerLeave() && player.getUniqueId().equals(this.currentPrivateServiceUtil.getOwner())) {
-            languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.get().replace("%OWNER%", player.getName()));
+            this.languageAPI.getPlayerExecutor().broadcastMessage(I18N.OWNER_LEFT_STOPPING_SERVER.get().replace("%OWNER%", player.getName()));
 
-            Bukkit.getScheduler().runTaskLater(privateServer, () -> {
+            Bukkit.getScheduler().runTaskLater(this.privateServer, () -> {
                 if(Bukkit.getPlayer(this.currentPrivateServiceUtil.getOwner()) != null) {
                     return;
                 }
-                languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.get().replace("%OWNER%", player.getName()));
+                this.languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_LEFT_KICK_MESSAGE.get().replace("%OWNER%", player.getName()));
                 Bukkit.shutdown();
             }, 20 * 15L);
             return;
@@ -71,7 +71,7 @@ public class PlayerQuitListener implements Listener {
         if (Bukkit.getOnlinePlayers().size() != 0) {
             return;
         }
-        Bukkit.getScheduler().runTaskLater(privateServer, () -> {
+        Bukkit.getScheduler().runTaskLater(this.privateServer, () -> {
             if(Bukkit.getOnlinePlayers().size() != 0) {
                 return;
             }

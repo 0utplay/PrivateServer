@@ -262,17 +262,14 @@ public class PrivateServerUtil {
             // profile = new Profile(settings.getNPCName());
             // profile.complete();
 
-            npcId =
-                    new NPC.Builder(profile)
-                            .imitatePlayer(settings.isImitatePlayer())
-                            .lookAtPlayer(settings.isLookAtPlayer())
-                            .location(settings.getNPCLocation().getLocation())
-                            .build(npcPool)
-                            .getEntityId();
-            NPC npc = this.npcPool.getNPC(this.npcId);
-            if (npc != null) {
-                npc.metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send();
-            }
+            npcId = new NPC.Builder(profile)
+                    .imitatePlayer(settings.isImitatePlayer())
+                    .lookAtPlayer(settings.isLookAtPlayer())
+                    .location(settings.getNPCLocation().getLocation())
+                    .spawnCustomizer((npc, player)
+                            -> npc.metadata().queue(MetadataModifier.EntityMetadata.SKIN_LAYERS, true).send(player))
+                    .build(npcPool)
+                    .getEntityId();
         }
     }
 

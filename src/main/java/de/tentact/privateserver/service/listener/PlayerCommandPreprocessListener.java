@@ -55,6 +55,7 @@ public class PlayerCommandPreprocessListener implements Listener {
                 return;
             }
             this.languageAPI.getPlayerExecutor().kickAll(I18N.OWNER_REQUESTED_STOP_KICK_ALL.get().replace("%OWNER%", player.getDisplayName()));
+            Bukkit.shutdown();
         }
     }
 

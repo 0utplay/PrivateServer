@@ -44,7 +44,7 @@ public class CurrentPrivateServiceUtil {
         CloudNetDriver.getInstance().getServicesRegistry()
                 .getFirstService(IPlayerManager.class)
                 .getPlayerExecutor(serverOwner)
-                .connect(Wrapper.getInstance().getCurrentServiceInfoSnapshot().getName());
+                .connect(Wrapper.getInstance().getServiceId().getName());
     }
 
     /**

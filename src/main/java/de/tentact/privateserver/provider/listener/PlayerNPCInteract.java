@@ -26,6 +26,7 @@
 package de.tentact.privateserver.provider.listener;
 
 import com.github.juliarn.npc.event.PlayerNPCInteractEvent;
+import de.dytanic.cloudnet.driver.service.ServiceTemplate;
 import de.tentact.languageapi.LanguageAPI;
 import de.tentact.languageapi.player.LanguagePlayer;
 import de.tentact.languageapi.player.PlayerExecutor;
@@ -89,7 +90,6 @@ public class PlayerNPCInteract implements Listener {
                 serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem(), template).build());
             }
         });
-
         player.openInventory(serverItemInventory);
     }
 
@@ -120,17 +120,15 @@ public class PlayerNPCInteract implements Listener {
                         if (languagePlayer == null) {
                             return;
                         }
-                        String template = serverItemProperty.getTemplateToStart();
-                        String templatePrefix = template.split("/")[0];
-                        String templateName = template.split("/")[1];
+                        ServiceTemplate template = ServiceTemplate.parse(serverItemProperty.getTemplateToStart());
                         if (!player.hasPermission(serverItemProperty.getStartPermission())) {
                             languagePlayer.sendMessage(I18N.PLAYER_NO_TEMPLATE_START_PERMS.get()
                                     .replace("%TEMPLATE%", serverItemProperty.getTemplateToStart())
-                                    .replace("%TEMPLATE_NAME%", templateName)
-                                    .replace("%TEMPLATE_PREFIX%", templatePrefix));
+                                    .replace("%TEMPLATE_NAME%", template.getName())
+                                    .replace("%TEMPLATE_PREFIX%", template.getPrefix()));
                             return;
                         }
-                        this.privateServer.getPrivateServerUtil().createPrivateServer(player, template);
+                        this.privateServer.getPrivateServerUtil().createPrivateServer(player, template.getTemplatePath());
                     });
             if (!this.privateServer.getPrivateServerUtil().hasPrivateServer(player.getUniqueId())) {
                 return;

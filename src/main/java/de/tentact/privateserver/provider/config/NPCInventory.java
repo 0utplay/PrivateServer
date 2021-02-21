@@ -50,7 +50,7 @@ public class NPCInventory {
     }
 
     public String getOpenPermission() {
-        return openPermission;
+        return this.openPermission;
     }
 
     public NPCInventoryLayout getInventoryFillItem() {
