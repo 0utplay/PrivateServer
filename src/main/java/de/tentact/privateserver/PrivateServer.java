@@ -38,8 +38,6 @@ import de.tentact.privateserver.service.listener.PlayerQuitListener;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
-
 public class PrivateServer extends JavaPlugin {
 
     private Configuration configuration;
@@ -55,7 +53,7 @@ public class PrivateServer extends JavaPlugin {
             //Init this plugin as PrivateServer provider
             this.initProvider();
         }
-        Objects.requireNonNull(this.getCommand("privateserver")).setExecutor(new PrivateServerCommand(this));
+        this.getCommand("privateserver").setExecutor(new PrivateServerCommand(this));
     }
 
     public Configuration getConfiguration() {
