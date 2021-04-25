@@ -33,6 +33,8 @@ import java.util.UUID;
 
 public class CurrentPrivateServiceUtil {
 
+    private final IPlayerManager playerManager = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class);
+
     /**
      * Sends the owner to this server by fetching the attached properties
      */
@@ -41,14 +43,14 @@ public class CurrentPrivateServiceUtil {
             return;
         }
         UUID serverOwner = this.getProperty("serverowner", UUID.class);
-        CloudNetDriver.getInstance().getServicesRegistry()
-                .getFirstService(IPlayerManager.class)
+        this.playerManager
                 .getPlayerExecutor(serverOwner)
                 .connect(Wrapper.getInstance().getServiceId().getName());
     }
 
     /**
      * Checks if the server the plugin runs on is a PrivateServer
+     *
      * @return if the server is a PrivateServer
      */
     public boolean isPrivateServer() {

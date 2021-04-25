@@ -3,7 +3,9 @@ author: 0utplay
 version: 1.0
 main: de.tentact.privateserver.PrivateServer
 api-version: 1.13
-depend: [LanguageAPI, CloudNet-Bridge, ProtocolLib]
+depend: [LanguageAPI, CloudNet-Bridge]
+softdepend:
+  - ProtocolLib
 commands:
   privateserver:
     aliases: [pserver, ps, os, cs]

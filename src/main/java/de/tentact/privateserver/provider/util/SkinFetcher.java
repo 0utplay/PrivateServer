@@ -27,18 +27,26 @@ package de.tentact.privateserver.provider.util;
 
 import com.github.derrop.documents.Document;
 import com.github.derrop.documents.Documents;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class SkinFetcher {
 
     private static final String SERVICE_URL = "https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false";
+    private static final Cache<UUID, Document> skinCache = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
 
     public static String fetchValue(UUID uuid) {
-        Document properties = getProperties(uuid);
+        Document properties = skinCache.getIfPresent(uuid);
+        if(properties == null) {
+            properties = getProperties(uuid);
+            skinCache.put(uuid, properties);
+        }
         return properties.contains("value") ? properties.get("value", String.class) : "";
     }
 
@@ -47,7 +55,11 @@ public class SkinFetcher {
     }
 
     public static String fetchSignature(UUID uuid) {
-        Document properties = getProperties(uuid);
+        Document properties = skinCache.getIfPresent(uuid);
+        if(properties == null) {
+            properties = getProperties(uuid);
+            skinCache.put(uuid, properties);
+        }
         return properties.contains("signature") ? properties.get("signature", String.class) : "";
     }
 

@@ -258,11 +258,11 @@ public class PrivateServerUtil {
                             UUID.randomUUID(),
                             settings.getNPCName(),
                             Collections.singletonList(
-                                    new Profile.Property("textures", settings.getSkinValue(), null)));
+                                    new Profile.Property("textures", settings.getSkinValue(), settings.getSkinSignature())));
             // profile = new Profile(settings.getNPCName());
             // profile.complete();
 
-            npcId = new NPC.Builder(profile)
+            this.npcId = new NPC.Builder(profile)
                     .imitatePlayer(settings.isImitatePlayer())
                     .lookAtPlayer(settings.isLookAtPlayer())
                     .location(settings.getNPCLocation().getLocation())
@@ -271,10 +271,6 @@ public class PrivateServerUtil {
                     .build(npcPool)
                     .getEntityId();
         }
-    }
-
-    public NPC getNPC() {
-        return this.npcPool.getNPC(this.npcId);
     }
 
     public void removeNPC() {

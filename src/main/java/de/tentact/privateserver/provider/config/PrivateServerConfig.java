@@ -38,7 +38,7 @@ public class PrivateServerConfig {
     private NPCSetting npcSetting;
     private final NPCCurrentServerItemProperty currentServerItem;
     private final Collection<NPCServerItemProperty> startItems;
-    private final transient ServiceTask serviceTask;
+    private transient ServiceTask serviceTask;
 
     public PrivateServerConfig(String privateServerTaskName, String baseCommandPermission, NPCInventory npcInventory, NPCSetting npcSetting, NPCCurrentServerItemProperty currentServerItem, Collection<NPCServerItemProperty> startItems) {
         this.privateServerTaskName = privateServerTaskName;
@@ -47,7 +47,6 @@ public class PrivateServerConfig {
         this.currentServerItem = currentServerItem;
         this.npcInventory = npcInventory;
         this.startItems = startItems;
-        this.serviceTask = CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask(this.privateServerTaskName);
     }
 
     public NPCInventory getNPCInventory() {
@@ -65,6 +64,10 @@ public class PrivateServerConfig {
     @Nullable
     public ServiceTask getPrivateServerTask() {
        return this.serviceTask;
+    }
+
+    public void setServiceTask() {
+        this.serviceTask = CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask(this.privateServerTaskName);
     }
 
     public String getBaseCommandPermission() {

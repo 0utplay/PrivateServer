@@ -95,7 +95,9 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setLore(List<String> lore) {
-        this.itemStack.setLore(lore);
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.setLore(lore);
+        this.itemStack.setItemMeta(itemMeta);
         return this;
     }
 

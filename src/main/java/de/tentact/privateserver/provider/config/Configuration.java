@@ -41,6 +41,7 @@ public class Configuration {
 
     private Document document = new DefaultDocument();
     private final File configFile;
+    private final PrivateServerConfig privateServerConfig;
 
     public Configuration(PrivateServer privateServer) {
         this.configFile = new File(privateServer.getDataFolder(), "config.json");
@@ -51,6 +52,8 @@ public class Configuration {
                 privateServer.logInfo("Config.json has no entry... Resetting to default...");
                 this.writeDefaultConfiguration();
             }
+            this.privateServerConfig = this.document.get("config", PrivateServerConfig.class);
+            this.privateServerConfig.setServiceTask();
             return;
         }
         privateServer.logInfo("No config.json found...");
@@ -62,10 +65,12 @@ public class Configuration {
             privateServer.getLogger().log(Level.WARNING, "While creating directories used by the plugin an exception occurred:", e);
         }
         this.writeDefaultConfiguration();
+        this.privateServerConfig = this.document.get("config", PrivateServerConfig.class);
+        this.privateServerConfig.setServiceTask();
     }
 
     public PrivateServerConfig getPrivateServerConfig() {
-        return this.document.get("config", PrivateServerConfig.class);
+        return this.privateServerConfig;
     }
 
     private PrivateServerConfig getDefaultServerConfig() {
