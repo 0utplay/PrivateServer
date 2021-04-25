@@ -35,6 +35,7 @@ import de.tentact.privateserver.provider.service.PrivateServerUtil;
 import de.tentact.privateserver.service.CurrentPrivateServiceUtil;
 import de.tentact.privateserver.service.listener.PlayerCommandPreprocessListener;
 import de.tentact.privateserver.service.listener.PlayerQuitListener;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -76,7 +77,8 @@ public class PrivateServer extends JavaPlugin {
         this.getLogger().info("Initialising PrivateServer...");
         this.configuration = new Configuration(this);
         this.currentPrivateServiceUtil = new CurrentPrivateServiceUtil();
-        this.currentPrivateServiceUtil.sendOwner();
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this,
+                () -> this.currentPrivateServiceUtil.sendOwner(), 20L);
 
         new PlayerQuitListener(this);
         new PlayerCommandPreprocessListener(this);
@@ -104,7 +106,7 @@ public class PrivateServer extends JavaPlugin {
             }
         }
         if (!failedMaterials.toString().isEmpty()) {
-            this.logInfo("This materials do not exist: " + failedMaterials.toString() + " Please check your config.json and update the materials. Use the right ones for your server version.");
+            this.logInfo("This materials do not exist: " + failedMaterials + " Please check your config.json and update the materials. Use the right ones for your server version.");
         }
 
     }

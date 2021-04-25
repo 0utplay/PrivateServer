@@ -39,13 +39,13 @@ public class CurrentPrivateServiceUtil {
      * Sends the owner to this server by fetching the attached properties
      */
     public void sendOwner() {
-        if (!this.isPrivateServer()) {
+        UUID serverOwner = this.getOwner();
+        if (serverOwner == null) {
             return;
         }
-        UUID serverOwner = this.getProperty("serverowner", UUID.class);
         this.playerManager
                 .getPlayerExecutor(serverOwner)
-                .connect(Wrapper.getInstance().getServiceId().getName());
+                 .connect(Wrapper.getInstance().getServiceId().getName());
     }
 
     /**
