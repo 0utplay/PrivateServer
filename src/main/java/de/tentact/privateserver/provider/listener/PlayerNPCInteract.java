@@ -87,7 +87,8 @@ public class PlayerNPCInteract implements Listener {
             String template = this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templatePrefix")
                     + "/" + this.privateServer.getPrivateServerUtil().getPropertyAsString(serviceInfoSnapshot, "templateName");
             if (this.serverConfig.getCurrentServerItem() != null) {
-                serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(), new ItemBuilder(this.serverConfig.getCurrentServerItem(), template).build());
+                serverItemInventory.setItem(this.serverConfig.getCurrentServerItem().getInventorySlot(),
+                        new ItemBuilder(this.serverConfig.getCurrentServerItem(), template, serviceInfoSnapshot.getName()).build());
             }
         });
         player.openInventory(serverItemInventory);

@@ -71,7 +71,7 @@ public class ItemBuilder {
                 .setSubId(serverItemProperty.getSubId());
     }
 
-    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty, String startTemplate) {
+    public ItemBuilder(NPCCurrentServerItemProperty serverItemProperty, String startTemplate, String server) {
         this(serverItemProperty.getMaterialName());
         List<String> lore = serverItemProperty.getLore();
         Collections.replaceAll(lore, "%TEMPLATE%", startTemplate);
@@ -80,9 +80,10 @@ public class ItemBuilder {
 
         this.setDisplayName(
                 serverItemProperty.getDisplayName()
-                .replace("%TEMPLATE%", startTemplate)
-                .replace("%TEMPLATE_PREFIX%", startTemplate.split("/")[0])
-                .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1]))
+                        .replace("%TEMPLATE%", startTemplate)
+                        .replace("%TEMPLATE_PREFIX%", startTemplate.split("/")[0])
+                        .replace("%TEMPLATE_NAME%", startTemplate.split("/")[1])
+                        .replace("%SERVER%", server))
                 .setLore(lore)
                 .setSubId(serverItemProperty.getSubId());
     }

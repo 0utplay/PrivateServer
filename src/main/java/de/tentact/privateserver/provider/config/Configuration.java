@@ -98,7 +98,7 @@ public class Configuration {
                 ),
 
                 new NPCCurrentServerItemProperty(
-                        "Dein aktueller Server %displayname%",
+                        "Dein aktueller Server %SERVER%",
                         "DIAMOND_BLOCK",
                         (byte) -1,
                         Collections.singletonList("Klicke um deinem bereits gestarten Server zu joinen"),
